@@ -4,7 +4,6 @@ public class Database {
     public static Database getInstance() {
         return instance;
     }
-    ArrayList<Admin> admins = new ArrayList<>();
     ArrayList<Hotel> hotels = new ArrayList<>();
     ArrayList<Guest> guests = new ArrayList<>();
 

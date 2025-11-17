@@ -8,8 +8,8 @@ public class Wallet {
    double getBalance(){return balance;}
     void Pay(double price)
     {
-        balance-=price;
         if (price>balance)throw new IllegalArgumentException("Insufficient Funds");
+        balance-=price;
     }
     void refund(double price)
     {

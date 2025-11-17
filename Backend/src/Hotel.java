@@ -6,7 +6,6 @@ public class Hotel {
     public float rating;
     public String address;
     public ArrayList<Room> rooms = new ArrayList<>();
-    int roomN = 0;
 Hotel(){}
     Hotel(String hotelName, float rating, String address) {
         this.hotelName = hotelName;
@@ -29,35 +28,28 @@ Hotel(){}
     }
 
     public void createRoom(int roomNumber, double price, String roomType)
-    {     if (rooms.size()>100) throw new IllegalArgumentException("Hotel Full");
+    {   if (rooms.size()>100) throw new IllegalArgumentException("Hotel Full");
         for (Room room: rooms)
-        {
             if (room.roomNumber == roomNumber)
-            {
                 throw new IllegalArgumentException("Room Number Taken\n");
-            }
-        }
-        rooms.add(new Room(roomNumber, price, roomType));
+
+
+        rooms.add(new Room(roomNumber, price, roomType,this));
     }
-    public Room reserveRoom(int roomNumber, LocalDate checkout)
+    public Room reserveRoom(int roomNumber,LocalDate checkout)
     {
-        if (LocalDate.now().equals(checkout))
-        {
-            throw new IllegalArgumentException("PAY UP!!");
-        }
+
+        if (checkout.isBefore(LocalDate.now()))
+            throw new IllegalArgumentException("Time travel not supported.");
         for (Room room: rooms)
-        {
             if (room.roomNumber == roomNumber)
             {
-                if (!room.available)
-                {
-                    throw new IllegalArgumentException("Room already booked");
-
-                }
+                room.setCheckout(checkout);
+                if (!room.available) throw new IllegalArgumentException("Room already booked");
                 room.available = false;
                 return room;
             }
-        }
+
         throw new IllegalArgumentException("Room Number Invalid");
     }
 

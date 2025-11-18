@@ -3,13 +3,13 @@ import java.util.ArrayList;
 
 public class Guest extends User{
     private String password;
-    Hotel currhotel;
-    Wallet wallet=new Wallet();
+    private Hotel currhotel;
+    private final Wallet wallet=new Wallet();
     ArrayList<Room> roomsReserved= new ArrayList<>();
     boolean flagged = false;
     int countFlagged=0;
 
-Guest(String username, String password, LocalDate birthday,String ID)
+private Guest(String username, String password, LocalDate birthday,String ID)
 {
     this.birthday = birthday;
     this.password = password;
@@ -27,18 +27,18 @@ public boolean logIn(String username, String password,String ID)
 
     return false;
 }
-public boolean signUp(String username, String password, LocalDate birthday,String ID)
+public static Guest signUp(String username, String password, LocalDate birthday,String ID)
 {
     for (Guest guest: Database.getInstance().guests)
         if (guest.username .equals(username))
-            return false;
+            throw new IllegalArgumentException("Username Taken");
 
     if( Admin.validateCredentials(username, password, birthday, ID))
     {
-        new Guest(username, password, birthday, ID);
-        return true;
+       return new Guest(username, password, birthday, ID);
+
     }
-    return false;
+    return null;
 }
 public boolean chooseHotel(String name)
 {

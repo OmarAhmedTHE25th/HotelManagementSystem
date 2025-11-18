@@ -17,17 +17,18 @@ public class Admin extends User {
                 Database.getInstance().getAdmin().password.equals(password) &&
                 Database.getInstance().getAdmin().ID.equals(ID);
     }
-    public boolean signUp(String username, String password, LocalDate birthday,String ID) {
+    public static Admin signUp(String username, String password, LocalDate birthday,String ID) {
         if (validateCredentials(username, password, birthday, ID))
-        {new Admin(username, password, birthday, ID);return true;}
-        return false;
+          return new Admin(username, password, birthday, ID);
+        return null;
     }
     public static boolean validateCredentials(String username, String password, LocalDate birthday, String ID) {
         if  (birthday.getYear() < LocalDate.now().getYear()-18 ||
                 birthday.getYear() < LocalDate.now().getYear()-120||
                 birthday.isAfter(LocalDate.now()))
             throw new IllegalArgumentException("Invalid Age");
-        return password.length() >= 8 && password.matches(".* [!@#$%^&].*");
+       if(!(password.length() >= 8 && password.matches(".* [!@#$%^&].*")))throw new IllegalArgumentException("Weak Password");
+       return true;
     }
     public double getRevenue() {
         for(Guest guest: Database.getInstance().guests)

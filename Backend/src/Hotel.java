@@ -3,11 +3,11 @@ import java.util.ArrayList;
 
 public class Hotel {
     public String hotelName;
-    public float rating;
+    public Ratings rating;
     public String address;
     public ArrayList<Room> rooms = new ArrayList<>();
 Hotel(){}
-    Hotel(String hotelName, float rating, String address) {
+    private Hotel(String hotelName, Ratings rating, String address) {
         this.hotelName = hotelName;
         this.rating = rating;
         this.address = address;
@@ -16,7 +16,7 @@ Hotel(){}
 
     }
 
-    public static Hotel createHotel(String name, float rating, String address) {
+    public static Hotel createHotel(String name, Ratings rating, String address) {
         for(Hotel hotel: Database.getInstance().hotels)
         {
             if (hotel.hotelName.equals(name))
@@ -27,7 +27,7 @@ Hotel(){}
         return new Hotel(name, rating, address);
     }
 
-    public void createRoom(int roomNumber, double price, String roomType)
+    public void createRoom(int roomNumber, double price, Types roomType)
     {   if (rooms.size()>100) throw new IllegalArgumentException("Hotel Full");
         for (Room room: rooms)
             if (room.roomNumber == roomNumber)

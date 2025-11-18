@@ -20,7 +20,8 @@ Hotel(){}
         return hotelName;
     }
 
-    public static Hotel createHotel(String name, Ratings rating, String address) {
+
+    public Hotel createHotel(String name, Ratings rating, String address) {
         for(Hotel hotel: Database.getInstance().hotels)
         {
             if (hotel.hotelName.equals(name))
@@ -29,16 +30,6 @@ Hotel(){}
             }
         }
         return new Hotel(name, rating, address);
-    }
-
-    public void createRoom(int roomNumber, double price, Types roomType)
-    {   if (rooms.size()>100) throw new IllegalArgumentException("Hotel Full");
-        for (Room room: rooms)
-            if (room.roomNumber == roomNumber)
-                throw new IllegalArgumentException("Room Number Taken\n");
-
-
-        rooms.add(new Room(roomNumber, price, roomType,this));
     }
     public Room reserveRoom(int roomNumber,LocalDate checkout)
     {
@@ -55,12 +46,6 @@ Hotel(){}
 
         throw new IllegalArgumentException("Room Number Invalid");
     }
-    public void changeRoomPrice(int roomNumber,int newPrice)
-    {
-        for (Room room: rooms)
-            if (room.roomNumber == roomNumber){room.price = newPrice; return;}
-        throw new IllegalArgumentException("Room Number Invalid");
-    }
 
     @Override
     public String toString() {
@@ -69,5 +54,9 @@ Hotel(){}
                 ", rating='" + rating + '\'' +
                 ", address='" + address + '\'' +
                 '}';
+    }
+
+    public ArrayList<Room> getRooms() {
+        return rooms;
     }
 }

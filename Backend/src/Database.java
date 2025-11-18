@@ -7,6 +7,7 @@ public class Database {
    private final Admin[] admin= new Admin[1];
     ArrayList<Hotel> hotels = new ArrayList<>();
     ArrayList<Guest> guests = new ArrayList<>();
+    ArrayList<HotelAdmin> hotelAdmins = new ArrayList<>();
     public Admin getAdmin()
     {
         return admin[0];

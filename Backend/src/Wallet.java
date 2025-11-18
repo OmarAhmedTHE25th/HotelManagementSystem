@@ -11,7 +11,7 @@ public class Wallet {
         if (price>balance)throw new IllegalArgumentException("Insufficient Funds");
         balance-=price;
     }
-    void refund(double price) {
+    void getMoney(double price) {
         balance += price;
     }
 }

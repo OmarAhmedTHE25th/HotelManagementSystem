@@ -39,7 +39,7 @@ public class Admin extends User {
         {
             for (Room room: guest.getRoomsReserved() )
             {
-                wallet.refund(room.price);
+                wallet.getMoney(room.price);
             }
         }
         return wallet.getBalance();
@@ -60,7 +60,14 @@ public class Admin extends User {
     public void Resign() {
     Database.getInstance().setAdmin(null);
 }
-
+    void giveSalary(String  ID)
+    {
+        for (HotelAdmin hotelAdmin : Database.getInstance().hotelAdmins)
+        {
+            wallet.Pay(50);
+            if (hotelAdmin.ID.equals(ID))hotelAdmin.wallet.getMoney(50);
+        }
+    }
 
 
     public Hotel createHotel(String name, Ratings rating, String address) {

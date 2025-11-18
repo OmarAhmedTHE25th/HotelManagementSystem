@@ -82,7 +82,7 @@ public boolean cancelReservation(int roomNumber)
             roomsReserved.remove(room);
 
             if (LocalDate.now().isBefore(room.checkout))
-                wallet.refund(room.price);
+                wallet.getMoney(room.price);
             return true;
         }
     throw new IllegalArgumentException("Room number invalid");

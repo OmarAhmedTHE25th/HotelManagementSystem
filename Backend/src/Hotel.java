@@ -7,7 +7,7 @@ public class Hotel {
     private String address;
     private final ArrayList<Room> rooms = new ArrayList<>();
 Hotel(){}
-    private Hotel(String hotelName, Ratings rating, String address) {
+    Hotel(String hotelName, Ratings rating, String address) {
         this.hotelName = hotelName;
         this.rating = rating;
         this.address = address;
@@ -21,16 +21,6 @@ Hotel(){}
     }
 
 
-    public Hotel createHotel(String name, Ratings rating, String address) {
-        for(Hotel hotel: Database.getInstance().hotels)
-        {
-            if (hotel.hotelName.equals(name))
-            {
-                throw new IllegalArgumentException("Hotel Name taken\n");
-            }
-        }
-        return new Hotel(name, rating, address);
-    }
     public Room reserveRoom(int roomNumber,LocalDate checkout)
     {
         if (checkout.isBefore(LocalDate.now()))

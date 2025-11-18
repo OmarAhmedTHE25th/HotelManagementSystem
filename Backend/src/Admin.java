@@ -63,6 +63,18 @@ public class Admin extends User {
 
 
 
+    public Hotel createHotel(String name, Ratings rating, String address) {
+        for(Hotel hotel: Database.getInstance().hotels)
+        {
+            if (hotel.getHotelName().equals(name))
+            {
+                throw new IllegalArgumentException("Hotel Name taken\n");
+            }
+        }
+        return new Hotel(name, rating, address);
+    }
+
+
 
     @Override
     public String toString() {

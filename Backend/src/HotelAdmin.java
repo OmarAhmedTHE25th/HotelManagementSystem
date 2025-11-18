@@ -8,12 +8,13 @@ public class HotelAdmin extends User{
     private String password;
 
     HotelAdmin(){}
-    HotelAdmin(String username, String password, LocalDate birthday, String ID)
+    HotelAdmin(String username, String password, LocalDate birthday, String ID,Hotel hotel)
     {
         this.birthday = birthday;
         this.password = password;
         this.username = username;
         this.ID = ID;
+        this.hotel = hotel;
         Database.getInstance().hotelAdmins.add(this);
     }
     public boolean logIn(String username, String password,String ID)
@@ -24,7 +25,7 @@ public class HotelAdmin extends User{
 
         return false;
     }
-    public static @Nullable HotelAdmin signUp(String username, String password, LocalDate birthday, String ID)
+    public static @Nullable HotelAdmin signUp(String username, String password, LocalDate birthday, String ID,Hotel hotel)
     {
         for (HotelAdmin hotelAdmin: Database.getInstance().hotelAdmins)
             if (hotelAdmin.username .equals(username))
@@ -34,7 +35,7 @@ public class HotelAdmin extends User{
 
         if( Admin.validateCredentials(username, password, birthday, ID))
         {
-            return new HotelAdmin(username, password, birthday, ID);
+            return new HotelAdmin(username, password, birthday, ID,hotel);
 
         }
         return null;

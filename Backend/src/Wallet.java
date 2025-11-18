@@ -1,6 +1,6 @@
 public class Wallet {
 
-    private double balance;
+    private double balance = 0;
    void setBalance(int balance)
    {
        this.balance = balance;
@@ -11,8 +11,7 @@ public class Wallet {
         if (price>balance)throw new IllegalArgumentException("Insufficient Funds");
         balance-=price;
     }
-    void refund(double price)
-    {
-        balance+=price;
+    void refund(double price) {
+        balance += price;
     }
 }

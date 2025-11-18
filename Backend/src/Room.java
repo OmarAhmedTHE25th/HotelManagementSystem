@@ -7,6 +7,7 @@ public class Room {
     public String roomType;
     public LocalDate checkout = null;
     public Hotel hotel;
+
     Room(){}
     Room(int roomNumber,double price,String roomType,Hotel hotel)
     {

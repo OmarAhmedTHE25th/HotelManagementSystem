@@ -38,7 +38,6 @@ Hotel(){}
     }
     public Room reserveRoom(int roomNumber,LocalDate checkout)
     {
-
         if (checkout.isBefore(LocalDate.now()))
             throw new IllegalArgumentException("Time travel not supported.");
         for (Room room: rooms)
@@ -50,6 +49,12 @@ Hotel(){}
                 return room;
             }
 
+        throw new IllegalArgumentException("Room Number Invalid");
+    }
+    public void changeRoomPrice(int roomNumber,int newPrice)
+    {
+        for (Room room: rooms)
+            if (room.roomNumber == roomNumber){room.price = newPrice; return;}
         throw new IllegalArgumentException("Room Number Invalid");
     }
 

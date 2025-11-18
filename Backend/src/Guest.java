@@ -6,6 +6,8 @@ public class Guest extends User{
     Hotel currhotel;
     Wallet wallet=new Wallet();
     ArrayList<Room> roomsReserved= new ArrayList<>();
+    boolean flagged = false;
+    int countFlagged=0;
 
 Guest(String username, String password, LocalDate birthday,String ID)
 {
@@ -18,6 +20,7 @@ Guest(String username, String password, LocalDate birthday,String ID)
 Guest(){}
 public boolean logIn(String username, String password,String ID)
 {
+    if(countFlagged>3)throw new IllegalArgumentException("Account Terminated");
     for (Guest guest : Database.getInstance().guests)
         if (guest.username .equals(username) && guest.password.equals(password)&&guest.ID.equals(ID))
             return true;
@@ -30,8 +33,12 @@ public boolean signUp(String username, String password, LocalDate birthday,Strin
         if (guest.username .equals(username))
             return false;
 
-    new Guest(username, password, birthday, ID);
-    return true;
+    if( Admin.validateCredentials(username, password, birthday, ID))
+    {
+        new Guest(username, password, birthday, ID);
+        return true;
+    }
+    return false;
 }
 public boolean chooseHotel(String name)
 {
@@ -55,7 +62,6 @@ public boolean makeReservation(int roomNumber,LocalDate checkout)
         }
  Room currRoom = currhotel.reserveRoom(roomNumber,checkout);
  roomsReserved.add(currRoom);
- wallet.Pay(currRoom.price);
  return true;
 }
 public boolean cancelReservation(int roomNumber)
@@ -72,10 +78,20 @@ public boolean cancelReservation(int roomNumber)
             return true;
         }
     throw new IllegalArgumentException("Room number invalid");
-
 }
-
-
+public boolean checkout(int roomNumber)
+{
+    for(Room room: roomsReserved)
+    {
+        if (room.roomNumber == roomNumber) {
+            room.available = true;
+            wallet.Pay(room.price);
+            roomsReserved.remove(room);
+            return true;
+        }
+    }
+    return false;
+}
     @Override
     public String toString() {
         return "Guest{" +

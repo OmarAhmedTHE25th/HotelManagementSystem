@@ -27,7 +27,7 @@ public class Admin extends User {
                 birthday.getYear() < LocalDate.now().getYear()-120||
                 birthday.isAfter(LocalDate.now()))
             throw new IllegalArgumentException("Invalid Age");
-       if(!(password.length() >= 8 && password.matches(".* [!@#$%^&].*")))throw new IllegalArgumentException("Weak Password");
+       if(!(password.length() >= 8 && password.matches(".*[!@#$%^&].*")))throw new IllegalArgumentException("Weak Password");
        return true;
     }
     public double getRevenue() {
@@ -53,10 +53,10 @@ public class Admin extends User {
                 }
             }
     }
-    public void Resign()
-{
+    public void Resign() {
     Database.getInstance().setAdmin(null);
 }
+
 
 
 

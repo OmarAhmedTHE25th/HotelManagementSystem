@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.Nullable;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -5,11 +7,15 @@ public class Guest extends User{
     private String password;
     private Hotel currhotel;
     private final Wallet wallet=new Wallet();
-    ArrayList<Room> roomsReserved= new ArrayList<>();
+    private final ArrayList<Room> roomsReserved= new ArrayList<>();
     boolean flagged = false;
     int countFlagged=0;
 
-private Guest(String username, String password, LocalDate birthday,String ID)
+    public ArrayList<Room> getRoomsReserved() {
+        return roomsReserved;
+    }
+
+    private Guest(String username, String password, LocalDate birthday, String ID)
 {
     this.birthday = birthday;
     this.password = password;
@@ -27,11 +33,13 @@ public boolean logIn(String username, String password,String ID)
 
     return false;
 }
-public static Guest signUp(String username, String password, LocalDate birthday,String ID)
+public static @Nullable Guest signUp(String username, String password, LocalDate birthday, String ID)
 {
     for (Guest guest: Database.getInstance().guests)
         if (guest.username .equals(username))
             throw new IllegalArgumentException("Username Taken");
+    for (Guest guest: Database.getInstance().guests)
+        if (guest.ID.equals(ID))throw new IllegalArgumentException("ID already exists");
 
     if( Admin.validateCredentials(username, password, birthday, ID))
     {
@@ -44,7 +52,7 @@ public boolean chooseHotel(String name)
 {
     Database data = new Database();
     for (Hotel hotel : data.hotels)
-     if (hotel.hotelName.equals( name))
+     if (hotel.getHotelName().equals(name))
         {
             currhotel = hotel;
            return true;

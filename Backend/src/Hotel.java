@@ -2,10 +2,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Hotel {
-    public String hotelName;
-    public Ratings rating;
-    public String address;
-    public ArrayList<Room> rooms = new ArrayList<>();
+    private String hotelName;
+    private Ratings rating;
+    private String address;
+    private final ArrayList<Room> rooms = new ArrayList<>();
 Hotel(){}
     private Hotel(String hotelName, Ratings rating, String address) {
         this.hotelName = hotelName;
@@ -14,6 +14,10 @@ Hotel(){}
 
         Database.getInstance().hotels.add(this);
 
+    }
+
+    public String getHotelName() {
+        return hotelName;
     }
 
     public static Hotel createHotel(String name, Ratings rating, String address) {

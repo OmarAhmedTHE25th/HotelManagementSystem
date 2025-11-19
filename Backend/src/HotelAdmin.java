@@ -66,4 +66,5 @@ public class HotelAdmin extends User{
             if (room.roomNumber == roomNumber){room.price = newPrice; return;}
         throw new IllegalArgumentException("Room Number Invalid");
     }
+
 }

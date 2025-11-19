@@ -100,6 +100,16 @@ public boolean checkout(int roomNumber)
     }
     return false;
 }
+public String viewReservations()
+{
+    StringBuilder info = new StringBuilder();
+    for (Room room: roomsReserved)
+    {
+        info.append(room.toString()).append("\n");
+    }
+    return info.toString();
+}
+
     @Override
     public String toString() {
         return "Guest{" +
@@ -109,4 +119,6 @@ public boolean checkout(int roomNumber)
                 ", balance= $" + wallet.getBalance() +
                 '}';
     }
+
+
 }

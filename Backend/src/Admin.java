@@ -68,8 +68,6 @@ public class Admin extends User {
             if (hotelAdmin.ID.equals(ID))hotelAdmin.wallet.getMoney(50);
         }
     }
-
-
     public Hotel createHotel(String name, Ratings rating, String address) {
         for(Hotel hotel: Database.getInstance().hotels)
         {
@@ -80,7 +78,15 @@ public class Admin extends User {
         }
         return new Hotel(name, rating, address);
     }
-
+    public String viewHotels()
+    {
+        StringBuilder sb = new StringBuilder();
+        for (Hotel hotel: Database.getInstance().hotels)
+        {
+            sb.append(hotel.toString()).append("\n");
+        }
+        return sb.toString();
+    }
 
 
     @Override

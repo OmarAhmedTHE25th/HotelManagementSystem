@@ -1,0 +1,47 @@
+.root-pane {
+    -fx-background-color: #f4f4f4;
+    -fx-font-family: "Segoe UI", Helvetica, sans-serif;
+}
+
+.card {
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+    -fx-padding: 20;
+    -fx-background-radius: 5;
+}
+
+.toolbar {
+    -fx-background-color: #2c3e50;
+}
+
+.toolbar .label {
+    -fx-text-fill: white;
+}
+
+.header-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.header-small {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+}
+
+.action-btn {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.action-btn:hover {
+    -fx-background-color: #2980b9;
+}
+
+.text-field, .password-field, .combo-box, .date-picker {
+    -fx-background-radius: 3;
+    -fx-padding: 8;
+}

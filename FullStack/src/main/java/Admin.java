@@ -14,16 +14,21 @@ public class Admin extends User {
         this.ID = ID;
         if(Database.getInstance().getAdmin() == null)Database.getInstance().setAdmin(this);
         else{throw new IllegalArgumentException("Invalid Entry");}
+        this.wallet = new Wallet();
     }
     public boolean logIn(String username, String password,String ID) {
         return Database.getInstance().getAdmin().username.equals(username) &&
                 Database.getInstance().getAdmin().password.equals(password) &&
                 Database.getInstance().getAdmin().ID.equals(ID);
     }
-    public static @Nullable Admin signUp(String username, String password, LocalDate birthday, String ID) {
+    public static  boolean signUp(String username, String password, LocalDate birthday, String ID) {
+        if (Database.getInstance().getAdmin() != null) {
+            throw new IllegalStateException("An Admin account already exists. Cannot register another.");
+        }
         if (validateCredentials(username, password, birthday, ID))
-          return new Admin(username, password, birthday, ID);
-        return null;
+        {   new Admin(username, password, birthday, ID);
+        return true;}
+        return false;
     }
     public static boolean validateCredentials(String username, String password, @NotNull LocalDate birthday, String ID) {
         if  (birthday.getYear() < LocalDate.now().getYear()-18 ||
@@ -31,7 +36,7 @@ public class Admin extends User {
                 birthday.isAfter(LocalDate.now()))
             throw new IllegalArgumentException("Invalid Age");
 
-       if(!(password.length() >= 8 && password.matches(".*[!@#$%^&].*")))throw new IllegalArgumentException("Weak Password");
+       if(!(password.length() >= 8 && password.matches(".*[!@#$%^&?<>].*")))throw new IllegalArgumentException("Weak Password");
        return true;
     }
     public double getRevenue() {

@@ -1,6 +1,6 @@
 public class Wallet {
 
-    private double balance = 0;
+    private double balance = 100;
    void setBalance(int balance)
    {
        this.balance = balance;

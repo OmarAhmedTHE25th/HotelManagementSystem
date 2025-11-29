@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="LoginController" styleClass="root-pane">
+    <VBox alignment="CENTER" spacing="20" maxWidth="400" styleClass="card">
+        <Label text="Hotel System" styleClass="header-label"/>
+
+        <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
+            <Tab text="Login">
+                <VBox spacing="10" alignment="CENTER">
+                    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+                    <ComboBox fx:id="roleCombo" promptText="Select Role" maxWidth="Infinity"/>
+                    <TextField fx:id="usernameField" promptText="Username"/>
+                    <TextField fx:id="idField" promptText="ID"/>
+                    <PasswordField fx:id="passwordField" promptText="Password"/>
+                    <Button text="Login" onAction="#onLogin" styleClass="action-btn" maxWidth="Infinity"/>
+                </VBox>
+            </Tab>
+            <Tab text="Sign Up">
+                <VBox spacing="10" alignment="CENTER">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+
+                    <!-- Role selection -->
+                    <ComboBox fx:id="regRole" promptText="Select Role" maxWidth="Infinity"/>
+
+                    <TextField fx:id="regUsername" promptText="Username"/>
+                    <TextField fx:id="regId" promptText="ID"/>
+                    <PasswordField fx:id="regPass" promptText="Password (must include special char)"/>
+                    <DatePicker fx:id="regDob" promptText="Birthday" maxWidth="Infinity"/>
+
+                    <!-- Only visible for Hotel Admin -->
+                    <TextField fx:id="regHotelName" promptText="Hotel Name" maxWidth="Infinity" visible="false" disable="true"/>
+
+                    <Button text="Create Account" onAction="#onRegister" styleClass="action-btn" maxWidth="Infinity"/>
+                </VBox>
+            </Tab>
+
+        </TabPane>
+    </VBox>
+</StackPane>

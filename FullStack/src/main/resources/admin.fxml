@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="AdminController" styleClass="root-pane">
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="toolbar">
+            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+            <Label text="Admin Dashboard" styleClass="header-small"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Logout" onAction="#onLogout"/>
+        </HBox>
+    </top>
+    <center>
+        <VBox spacing="20">
+            <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+            <HBox spacing="20">
+                <VBox spacing="10" styleClass="card" HBox.hgrow="ALWAYS">
+                    <Label text="Create New Hotel" styleClass="header-small"/>
+                    <TextField fx:id="hotelNameField" promptText="Hotel Name"/>
+                    <TextField fx:id="hotelAddressField" promptText="Address"/>
+                    <ComboBox fx:id="ratingCombo" promptText="Rating" maxWidth="Infinity"/>
+                    <Button text="Create Hotel" onAction="#onCreateHotel" styleClass="action-btn"/>
+                </VBox>
+
+                <VBox spacing="10" styleClass="card" HBox.hgrow="ALWAYS">
+                    <Label text="Actions" styleClass="header-small"/>
+                    <Button text="View Total Revenue" onAction="#onViewRevenue" maxWidth="Infinity"/>
+                    <Button text="Flag Overdue Customers" onAction="#onFlagOverdue" maxWidth="Infinity"/>
+                </VBox>
+            </HBox>
+
+            <Label text="System Output / Hotels List" styleClass="header-small"/>
+            <TextArea fx:id="outputArea" VBox.vgrow="ALWAYS" editable="false"/>
+        </VBox>
+    </center>
+</BorderPane>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="GuestController" styleClass="root-pane">
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT" styleClass="toolbar">
+            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+            <Label fx:id="welcomeLabel" styleClass="header-small"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="balanceLabel"/>
+            <HBox spacing="10">
+                <TextField fx:id="depositField" promptText="Amount to add"/>
+                <Button text="Deposit" onAction="#onDeposit"/>
+            </HBox>
+
+
+            <HBox spacing="10">
+                <TextField fx:id="roomActionField" promptText="Room Number"/>
+                <Button text="Cancel Reservation" onAction="#onCancelReservation"/>
+                <Button text="Checkout" onAction="#onCheckoutRoom"/>
+            </HBox>
+
+
+            <Button text="Logout" onAction="#onLogout"/>
+        </HBox>
+    </top>
+    <center>
+        <SplitPane dividerPositions="0.3">
+            <VBox spacing="10">
+                <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+                <Label text="Select Hotel" styleClass="header-small"/>
+                <ListView fx:id="hotelList" VBox.vgrow="ALWAYS"/>
+            </VBox>
+            <VBox spacing="10">
+                <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+                <Label text="Available Rooms" styleClass="header-small"/>
+                <TableView fx:id="roomTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="numberCol" text="Room #"/>
+                        <TableColumn fx:id="typeCol" text="Type"/>
+                        <TableColumn fx:id="priceCol" text="Price ($)"/>
+                    </columns>
+                </TableView>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <DatePicker fx:id="checkoutDate" promptText="Checkout Date"/>
+                    <Button text="Reserve Selected" onAction="#onReserve" styleClass="action-btn"/>
+                </HBox>
+            </VBox>
+        </SplitPane>
+    </center>
+    <bottom>
+        <VBox spacing="5" styleClass="footer">
+            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+            <Label text="Reservations"/>
+            <TextArea fx:id="myReservationsArea" prefRowCount="4" editable="false"/>
+            <TableView fx:id="reservationsTable" prefHeight="200">
+                <columns>
+                    <TableColumn fx:id="resRoomCol" text="Room Number"/>
+                    <TableColumn fx:id="resPriceCol" text="Price"/>
+                    <TableColumn fx:id="resCheckoutCol" text="Checkout Date"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </bottom>
+</BorderPane>

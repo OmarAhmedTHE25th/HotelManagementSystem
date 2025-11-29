@@ -2,11 +2,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Guest extends User{
     private String password;
     private Hotel currhotel;
-    private final Wallet wallet=new Wallet();
+    final Wallet wallet=new Wallet();
     private final ArrayList<Room> roomsReserved= new ArrayList<>();
     boolean flagged = false;
     int countFlagged=0;
@@ -50,8 +51,7 @@ public static @Nullable Guest signUp(String username, String password, LocalDate
 }
 public boolean chooseHotel(String name)
 {
-    Database data = new Database();
-    for (Hotel hotel : data.hotels)
+    for (Hotel hotel : Database.getInstance().hotels)
      if (hotel.getHotelName().equals(name))
         {
             currhotel = hotel;
@@ -68,32 +68,42 @@ public boolean makeReservation(int roomNumber,LocalDate checkout)
             room.price*=2;
             throw new IllegalArgumentException("PAY UP!!");
         }
+
  Room currRoom = currhotel.reserveRoom(roomNumber,checkout);
+    wallet.Pay(currRoom.price);
  roomsReserved.add(currRoom);
  return true;
 }
-public boolean cancelReservation(int roomNumber)
-{
-    if (roomsReserved.isEmpty())throw new IllegalArgumentException("No Reservations to cancel");
+    public boolean cancelReservation(int roomNumber)
+    {
+        if (roomsReserved.isEmpty())
+            throw new IllegalArgumentException("No Reservations to cancel");
 
-    for (Room room: roomsReserved)
-        if(room.roomNumber==roomNumber) {
-            room.available = true;
-            roomsReserved.remove(room);
+        Iterator<Room> it = roomsReserved.iterator();
 
-            if (LocalDate.now().isBefore(room.checkout))
-                wallet.getMoney(room.price);
-            return true;
+        while (it.hasNext()) {
+            Room room = it.next();
+
+            if (room.roomNumber == roomNumber) {
+                room.available = true;
+                it.remove(); // safe
+
+                if (LocalDate.now().isBefore(room.checkout))
+                    wallet.getMoney(room.price);
+
+                return true;
+            }
         }
-    throw new IllegalArgumentException("Room number invalid");
-}
+
+        throw new IllegalArgumentException("Room number invalid");
+    }
+
 public boolean checkout(int roomNumber)
 {
     for(Room room: roomsReserved)
     {
         if (room.roomNumber == roomNumber) {
             room.available = true;
-            wallet.Pay(room.price);
             roomsReserved.remove(room);
             return true;
         }

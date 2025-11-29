@@ -49,4 +49,8 @@ Hotel(){}
     public ArrayList<Room> getRooms() {
         return rooms;
     }
+
+    public String getLocation() {
+    return address;
+    }
 }

@@ -176,11 +176,6 @@ public class GuestController {
             HotelApplication.showError("Invalid amount.");
         }
     }
-    @FXML
-    private void onComplaint()
-    {
-        HotelApplication.showAlert("Title","Your complaint will be reviewed shortly.");
-    }
 
 
 }

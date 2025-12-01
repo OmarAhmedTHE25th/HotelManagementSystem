@@ -32,7 +32,6 @@ public class Admin extends User {
 
 
     public static boolean validateCredentials(String password, @NotNull LocalDate birthday) {
-        if ("devpass".equals(password)) return true; // Skip everything for testing
         LocalDate today = LocalDate.now();
         int age = Period.between(birthday, today).getYears();
         if  (age < 18 || age > 120 || birthday.isAfter(today))

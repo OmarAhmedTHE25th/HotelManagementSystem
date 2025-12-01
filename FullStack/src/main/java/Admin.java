@@ -37,7 +37,8 @@ public class Admin extends User {
         if  (age < 18 || age > 120 || birthday.isAfter(today))
             throw new IllegalArgumentException("Invalid Age");
 
-       if(!(password.length() >= 8 && password.matches(".*[!@#$%^&?<>].*")))throw new IllegalArgumentException("Weak Password");
+       if(password.length() < 8 || !password.matches(".*\\d.*")
+               || !password.matches(".*[!@#$%^&?<>_+=*{}()~].*"))throw new IllegalArgumentException("Weak Password");
        return true;
     }
     public double getRevenue() {

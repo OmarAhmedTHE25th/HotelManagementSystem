@@ -42,7 +42,7 @@ public static @Nullable Guest signUp(String username, String password, LocalDate
     for (Guest guest: Database.getInstance().guests)
         if (guest.ID.equals(ID))throw new IllegalArgumentException("ID already exists");
 
-    if( Admin.validateCredentials(username, password, birthday, ID))
+    if( Admin.validateCredentials(password, birthday))
     {
        return new Guest(username, password, birthday, ID);
 
@@ -129,6 +129,4 @@ public String viewReservations()
                 ", balance= $" + wallet.getBalance() +
                 '}';
     }
-
-
 }

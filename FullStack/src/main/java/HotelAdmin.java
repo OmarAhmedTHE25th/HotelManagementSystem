@@ -1,5 +1,3 @@
-import org.jetbrains.annotations.Nullable;
-
 import java.time.LocalDate;
 
 
@@ -37,7 +35,7 @@ public class HotelAdmin extends User{
         for (HotelAdmin hotelAdmin: Database.getInstance().hotelAdmins)
             if (hotelAdmin.ID.equals(ID))throw new IllegalArgumentException("ID already exists");
 
-        if( Admin.validateCredentials(username, password, birthday, ID))
+        if( Admin.validateCredentials(password, birthday))
         {
             new HotelAdmin(username, password, birthday, ID,hotel);
             return true;

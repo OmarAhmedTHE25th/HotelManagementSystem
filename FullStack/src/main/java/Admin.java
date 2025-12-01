@@ -1,7 +1,7 @@
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Admin extends User {
     private final String password;
@@ -21,19 +21,20 @@ public class Admin extends User {
                 Database.getInstance().getAdmin().password.equals(password) &&
                 Database.getInstance().getAdmin().ID.equals(ID);
     }
-    public static  boolean signUp(String username, String password, LocalDate birthday, String ID) {
+    public static void signUp(String username, String password, LocalDate birthday, String ID) {
         if (Database.getInstance().getAdmin() != null) {
             throw new IllegalStateException("An Admin account already exists. Cannot register another.");
         }
-        if (validateCredentials(username, password, birthday, ID))
+        if (validateCredentials(password, birthday))
         {   new Admin(username, password, birthday, ID);
-        return true;}
-        return false;
+        }
     }
-    public static boolean validateCredentials(String username, String password, @NotNull LocalDate birthday, String ID) {
-        if  (birthday.getYear() < LocalDate.now().getYear()-18 ||
-                birthday.getYear() < LocalDate.now().getYear()-120||
-                birthday.isAfter(LocalDate.now()))
+
+
+    public static boolean validateCredentials(String password, @NotNull LocalDate birthday) {
+        LocalDate today = LocalDate.now();
+        int age = Period.between(birthday, today).getYears();
+        if  (age < 18 || age > 120 || birthday.isAfter(today))
             throw new IllegalArgumentException("Invalid Age");
 
        if(!(password.length() >= 8 && password.matches(".*[!@#$%^&?<>].*")))throw new IllegalArgumentException("Weak Password");
@@ -73,7 +74,7 @@ public class Admin extends User {
             if (hotelAdmin.ID.equals(ID))hotelAdmin.wallet.getMoney(50);
         }
     }
-    public Hotel createHotel(String name, Ratings rating, String address) {
+    public void createHotel(String name, Ratings rating, String address) {
         for(Hotel hotel: Database.getInstance().hotels)
         {
             if (hotel.getHotelName().equals(name))
@@ -81,7 +82,7 @@ public class Admin extends User {
                 throw new IllegalArgumentException("Hotel Name taken\n");
             }
         }
-        return new Hotel(name, rating, address);
+        new Hotel(name, rating, address);
     }
     public String viewHotels()
     {

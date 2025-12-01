@@ -32,7 +32,6 @@ public class HotelApplication extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(HotelApplication.class.getResource("/" + fxml + ".fxml"));
             return fxmlLoader.load();
         } catch (Exception e) {
-            e.printStackTrace(); // ← this will show the REAL exception
             throw e;
         }
     }
@@ -78,9 +77,9 @@ public class HotelApplication extends Application {
 
         // --- Hotel 4 ---
         Hotel h4 = new Hotel("Mountain View Lodge", Ratings.THREE_STAR, "Denver");
-        h4.getRooms().add(new Room(101, 120.0, Types.SINGLE, h4));
-        h4.getRooms().add(new Room(102, 180.0, Types.DOUBLE, h4));
-        h4.getRooms().add(new Room(201, 250.0, Types.SUITE, h4));
+        h4.getRooms().add(new Room(701, 120.0, Types.SINGLE, h4));
+        h4.getRooms().add(new Room(702, 180.0, Types.DOUBLE, h4));
+        h4.getRooms().add(new Room(801, 250.0, Types.SUITE, h4));
 
         // --- Guest ---
         try {

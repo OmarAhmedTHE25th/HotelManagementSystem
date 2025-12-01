@@ -11,7 +11,13 @@ public class Room {
     Room(){}
     Room(int roomNumber,double price,Types roomType,Hotel hotel)
     {
-        this.roomNumber=roomNumber;
+        if (roomNumber<=0)throw new IllegalArgumentException("Invalid Room Number");
+        for (Hotel hotelx: Database.getInstance().hotels)
+            for (Room room : hotelx.getRooms()) {
+                if (roomNumber == room.roomNumber) throw new IllegalArgumentException("Room Number already exists");
+                else this.roomNumber=roomNumber;
+            }
+
         this.roomType=roomType;
         this.price = price;
         this.hotel = hotel;

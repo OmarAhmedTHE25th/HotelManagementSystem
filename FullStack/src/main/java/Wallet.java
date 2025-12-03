@@ -8,7 +8,7 @@ public class Wallet {
    double getBalance(){return balance;}
     void Pay(double price)
     {
-        if (price>balance)throw new IllegalArgumentException("Insufficient Funds");
+        if (price>balance)throw new IllegalArgumentException("No poor people allowed!");
         balance-=price;
     }
     void getMoney(double price) {

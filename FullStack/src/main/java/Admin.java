@@ -100,10 +100,10 @@ public class Admin extends User {
 
     @Override
     public String toString() {
-        return "Admin{" +
+        return
                 "username='" + username + '\'' +
                 ", birthday=" + birthday +
-                ", ID='" + ID + '\'' +
-                '}';
+                ", ID='" + ID + '\''
+                ;
     }
 }

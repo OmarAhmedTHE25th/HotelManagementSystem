@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Room {
     public int roomNumber;
@@ -24,11 +25,9 @@ public class Room {
 
     @Override
     public String toString() {
-        return "Room{" +
+        return
                 "roomNumber= " + roomNumber +
-                ", available= " + available +
-                ", price= $" + price +
-                ", roomType= '" + roomType + '\'' +
-                '}';
+                ", price = $" + price* ChronoUnit.DAYS.between(LocalDate.now(),checkout) +
+                ", roomType= '" + roomType + '\'' ;
     }
 }

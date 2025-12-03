@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 
 public class GuestController {
@@ -54,7 +55,7 @@ public class GuestController {
                 new SimpleIntegerProperty(cell.getValue().roomNumber));
 
         resPriceCol.setCellValueFactory(cell ->
-                new SimpleDoubleProperty(cell.getValue().price));
+                new SimpleDoubleProperty(cell.getValue().price* ChronoUnit.DAYS.between(LocalDate.now(),cell.getValue().checkout)));
 
         resCheckoutCol.setCellValueFactory(cell ->
                 new SimpleStringProperty(cell.getValue().checkout.toString()));
@@ -92,10 +93,6 @@ public class GuestController {
     }
 
     @FXML
-    private void onAddMoney() {
-        HotelApplication.showAlert("Info", "Please contact admin to add funds.");
-    }
-    @FXML
     private void onCancelReservation() {
         Guest g = (Guest) Session.currentUser;
 
@@ -104,7 +101,7 @@ public class GuestController {
 
             g.cancelReservation(roomNumber);
 
-            HotelApplication.showAlert("Canceled", "Reservation canceled. Refund issued if applicable.");
+            HotelApplication.showAlert("Canceled", "Reservation canceled. Refund issued.");
 
             reservationsTable.getItems().setAll(g.getRoomsReserved());
             updateWallet();
@@ -176,10 +173,35 @@ public class GuestController {
             HotelApplication.showError("Invalid amount.");
         }
     }
-@FXML
-private void onComplain()
-{
-    HotelApplication.showAlert("Complaint","Thank for your time your complaint will be processed soon {-:-}");
-}
+    @FXML
+    private void onComplain() {
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle("Complaint");
+        dialog.setHeaderText("Enter your complaint below:");
+
+        ButtonType submitButtonType = new ButtonType("Submit", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(submitButtonType, ButtonType.CANCEL);
+
+        TextArea textArea = new TextArea();
+        textArea.setPromptText("Type your complaint here...");
+        textArea.setWrapText(true);
+
+        dialog.getDialogPane().setContent(textArea);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == submitButtonType) {
+                return textArea.getText();
+            }
+            return null;
+        });
+
+        dialog.showAndWait().ifPresent(result -> {
+            if (!result.trim().isEmpty()) {
+                HotelApplication.showAlert("Complaint", "Thank for your time. Your complaint will be processed soon :-}");
+            }
+        });
+    }
 
 }
+
+

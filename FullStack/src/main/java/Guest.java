@@ -1,6 +1,5 @@
-import org.jetbrains.annotations.Nullable;
-
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -34,7 +33,7 @@ public boolean logIn(String username, String password,String ID)
 
     return false;
 }
-public static @Nullable Guest signUp(String username, String password, LocalDate birthday, String ID)
+public static void signUp(String username, String password, LocalDate birthday, String ID)
 {
     for (Guest guest: Database.getInstance().guests)
         if (guest.username .equals(username))
@@ -44,24 +43,23 @@ public static @Nullable Guest signUp(String username, String password, LocalDate
 
     if( Admin.validateCredentials(password, birthday))
     {
-       return new Guest(username, password, birthday, ID);
+        new Guest(username, password, birthday, ID);
 
     }
-    return null;
 }
-public boolean chooseHotel(String name)
+public void chooseHotel(String name)
 {
     for (Hotel hotel : Database.getInstance().hotels)
      if (hotel.getHotelName().equals(name))
         {
             currhotel = hotel;
-           return true;
+           return;
         }
 
 
     throw new IllegalArgumentException("Hotel Name Invalid");
 }
-public boolean makeReservation(int roomNumber,LocalDate checkout)
+public void makeReservation(int roomNumber, LocalDate checkout)
 {
     for(Room room: roomsReserved)
         if (LocalDate.now().isAfter(room.checkout)) {
@@ -70,11 +68,10 @@ public boolean makeReservation(int roomNumber,LocalDate checkout)
         }
 
  Room currRoom = currhotel.reserveRoom(roomNumber,checkout);
-    wallet.Pay(currRoom.price);
+    wallet.Pay(currRoom.price*(ChronoUnit.DAYS.between(LocalDate.now(), checkout)));
  roomsReserved.add(currRoom);
- return true;
 }
-    public boolean cancelReservation(int roomNumber)
+    public void cancelReservation(int roomNumber)
     {
         if (roomsReserved.isEmpty())
             throw new IllegalArgumentException("No Reservations to cancel");
@@ -89,9 +86,10 @@ public boolean makeReservation(int roomNumber,LocalDate checkout)
                 it.remove(); // safe
 
                 if (LocalDate.now().isBefore(room.checkout))
-                    wallet.getMoney(room.price);
+                    wallet.getMoney(room.price*(ChronoUnit.DAYS.between(LocalDate.now(),room.checkout)));
+                else throw new IllegalArgumentException("Refund Not Allowed");
 
-                return true;
+                return;
             }
         }
 
@@ -122,11 +120,10 @@ public String viewReservations()
 
     @Override
     public String toString() {
-        return "Guest{" +
+        return
                 "ID= '" + ID + '\'' +
                 ", username= '" + username + '\'' +
                 ", birthday= " + birthday +
-                ", balance= $" + wallet.getBalance() +
-                '}';
+                ", balance= $" + wallet.getBalance() ;
     }
 }

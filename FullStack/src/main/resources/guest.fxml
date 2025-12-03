@@ -42,7 +42,7 @@
                     <columns>
                         <TableColumn fx:id="numberCol" text="Room #"/>
                         <TableColumn fx:id="typeCol" text="Type"/>
-                        <TableColumn fx:id="priceCol" text="Price ($)"/>
+                        <TableColumn fx:id="priceCol" text="Price per night ($)"/>
                     </columns>
                 </TableView>
                 <HBox spacing="10" alignment="CENTER_LEFT">

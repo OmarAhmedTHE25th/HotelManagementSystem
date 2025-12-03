@@ -27,7 +27,7 @@ public class HotelAdmin extends User{
 
         return false;
     }
-    public static boolean signUp(String username, String password, LocalDate birthday, String ID,Hotel hotel)
+    public static void signUp(String username, String password, LocalDate birthday, String ID, Hotel hotel)
     {
         for (HotelAdmin hotelAdmin: Database.getInstance().hotelAdmins)
             if (hotelAdmin.username .equals(username))
@@ -38,10 +38,8 @@ public class HotelAdmin extends User{
         if( Admin.validateCredentials(password, birthday))
         {
             new HotelAdmin(username, password, birthday, ID,hotel);
-            return true;
 
         }
-        return false;
     }
 
     public Hotel getHotel() {

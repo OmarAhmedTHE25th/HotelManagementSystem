@@ -39,11 +39,11 @@ Hotel(){}
 
     @Override
     public String toString() {
-        return "Hotel{" +
+        return
                 "hotelName='" + hotelName + '\'' +
                 ", rating='" + rating + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+                ", address='" + address + '\''
+                ;
     }
 
     public ArrayList<Room> getRooms() {

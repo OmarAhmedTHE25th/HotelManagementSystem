@@ -20,6 +20,8 @@
                 <TextField fx:id="roomActionField" promptText="Room Number"/>
                 <Button text="Cancel Reservation" onAction="#onCancelReservation"/>
                 <Button text="Checkout" onAction="#onCheckoutRoom"/>
+                <Button text="Complain" onAction="#onComplain"/>
+
             </HBox>
 
 

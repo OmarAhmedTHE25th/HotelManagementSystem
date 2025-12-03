@@ -1,11 +1,8 @@
 public class Wallet {
 
     private double balance = 100;
-   void setBalance(int balance)
-   {
-       this.balance = balance;
-   }
-   double getBalance(){return balance;}
+
+    double getBalance(){return balance;}
     void Pay(double price)
     {
         if (price>balance)throw new IllegalArgumentException("No poor people allowed!");

@@ -4,6 +4,4 @@ abstract public class User {
     LocalDate birthday;
     String ID;
 User(){}
-    public User(String username, String password, LocalDate dob, String id) {
-    }
 }

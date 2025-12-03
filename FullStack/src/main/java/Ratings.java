@@ -3,6 +3,4 @@ public enum Ratings {
     FOUR_STAR,
     THREE_STAR,
     TWO_STAR,
-    ONE_STAR
-
-    }
+    ONE_STAR}

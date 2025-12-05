@@ -68,7 +68,7 @@ public class AdminController {
     }
 
     @FXML
-    private void onResign() throws IOException {
+    private void onResign() {
 
         // --- 1. The Initial Threat ---
         if (showSarcasticConfirmation("1/5: Final Warning!",
@@ -127,6 +127,9 @@ public class AdminController {
         confirm.setHeaderText(header);
         confirm.setContentText(content);
         // Returns true if the user clicks 'OK', false if they click 'Cancel'
-        return confirm.showAndWait().get() != ButtonType.OK;
+        if (confirm.showAndWait().isPresent())
+         return confirm.showAndWait().get() != ButtonType.OK;
+
+        return false;
     }
 }

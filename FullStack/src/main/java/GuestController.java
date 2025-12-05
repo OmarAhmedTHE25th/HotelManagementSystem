@@ -25,9 +25,9 @@ public class GuestController {
     @FXML private TableColumn<Room, Number> resPriceCol;
     @FXML private TableColumn<Room, String> resCheckoutCol;
     @FXML private TextField roomActionField;
-
+    @FXML private ComboBox<Hotel> hotelActionCombo;
     private Guest guest;
-
+    @FXML private TableColumn<Room, String> resHotelCol;
     @FXML
     public void initialize() {
         guest = (Guest) Session.currentUser;
@@ -35,6 +35,26 @@ public class GuestController {
         updateWallet();
 
         hotelList.setItems(FXCollections.observableArrayList(Database.getInstance().hotels));
+        hotelActionCombo.setItems(FXCollections.observableArrayList(Database.getInstance().hotels));
+        // 1. Customize how items look in the dropdown list (Cell Factory)
+        hotelActionCombo.setCellFactory(lv -> new ListCell<Hotel>() {
+            @Override
+            protected void updateItem(Hotel item, boolean empty) {
+                super.updateItem(item, empty);
+                // If the item exists, set the text to ONLY the hotel name
+                setText(empty ? null : item.getHotelName()); //
+            }
+        });
+
+        // 2. Customize how the selected item looks in the combo box button (Button Cell)
+        hotelActionCombo.setButtonCell(new ListCell<Hotel>() {
+            @Override
+            protected void updateItem(Hotel item, boolean empty) {
+                super.updateItem(item, empty);
+                // If the item exists, set the text to ONLY the hotel name
+                setText(empty ? null : item.getHotelName()); //
+            }
+        });
 
         hotelList.getSelectionModel().selectedItemProperty().addListener((_, _, newVal) -> {
             if (newVal != null) {
@@ -52,6 +72,8 @@ public class GuestController {
         numberCol.setCellValueFactory(cell ->
                 new SimpleIntegerProperty(cell.getValue().roomNumber).asObject()
         );
+        resHotelCol.setCellValueFactory(cell ->
+                new SimpleStringProperty(cell.getValue().hotel.getHotelName()));
         resRoomCol.setCellValueFactory(cell ->
                 new SimpleIntegerProperty(cell.getValue().roomNumber));
 
@@ -144,16 +166,9 @@ public class GuestController {
                 }
 
             }
-            class SimpleBinary {
 
-                // Or even simpler
-                public static int flip() {
-                    return Math.random() < 0.5 ? 0 : 1;
-                }
-            }
             Insults insult = new Insults();
             if (guest.wallet.getBalance() < selected.price)throw new IllegalArgumentException("No Poor People Allowed!");
-            if (SimpleBinary.flip() == 1){HotelApplication.showAlert("A Ghost", "Too bad a ghost came first,good luck next time :-}");return;}
             if(guest.getRoomsReserved().size() >= 5) {HotelApplication.showAlert("Too many rooms", insult.getRandomInsult());return;}
             if (Math.random() < 0.1){HotelApplication.showAlert("Inflation", "Your ugly face made the room Gods angry, +50$ fees");selected.price+=50;}
             if (Math.random() < 0.01){HotelApplication.showAlert("Pity", "We feel pity for your sorry ass. 10$ discount");selected.price-=10;}
@@ -177,9 +192,19 @@ public class GuestController {
     private void onCancelReservation() {
         Guest g = (Guest) Session.currentUser;
 
+        // 2. Get the selected hotel
+        Hotel selectedHotel = hotelActionCombo.getValue();
+        if (selectedHotel == null) {
+            HotelApplication.showError("Select a Hotel first for the action.");
+            return;
+        }
+
         try {
             int roomNumber = Integer.parseInt(roomActionField.getText());
-            g.cancelReservation(roomNumber);
+
+            // 3. Pass the Hotel object to the backend
+            g.cancelReservation(roomNumber, selectedHotel); // <--- UPDATED CALL
+
             HotelApplication.showAlert("Canceled", "Reservation canceled. Refund issued.");
 
             reservationsTable.getItems().setAll(g.getRoomsReserved());
@@ -193,14 +218,22 @@ public class GuestController {
     private void onCheckoutRoom() {
         Guest g = (Guest) Session.currentUser;
 
+        // 2. Get the selected hotel
+        Hotel selectedHotel = hotelActionCombo.getValue();
+        if (selectedHotel == null) {
+            HotelApplication.showError("Select a Hotel first for the action.");
+            return;
+        }
+
         try {
             int roomNumber = Integer.parseInt(roomActionField.getText());
 
-            if (g.checkout(roomNumber)) {
-                HotelApplication.showAlert("Checkout Complete", "We hope to never see you again");
+            // 3. Pass the Hotel object to the backend
+            if (g.checkout(roomNumber, selectedHotel)) { // <--- UPDATED CALL
+                HotelApplication.showAlert("Checkout Complete", "You have checked out successfully!");
                 refreshReservations();
             } else {
-                HotelApplication.showError("Invalid room number");
+                HotelApplication.showError("Invalid room number in " + selectedHotel.getHotelName());
             }
 
             reservationsTable.getItems().setAll(g.getRoomsReserved());
@@ -334,7 +367,7 @@ public class GuestController {
 //                complaintInsults.add("Your complaint has been noted and immediately used as kindling for our staff bonfire.");
 //                complaintInsults.add("We've added your photo to our 'Future Complainers' wall of shame.");
 //                complaintInsults.add("The only thing needing improvement here is your judgment in hotels.");
-//                complaintInsults.add("We'll address your complaint right after we finish this round of 'Who Gives a Sh*t?'");
+//                complaintInsults.add("We'll address your complaint right after we finish this round of 'Who Gives a Shit?'");
 //            }
 //
 //            // Get a random complaint insult

@@ -27,6 +27,7 @@ public class Room {
     public String toString() {
         return
                 "roomNumber= " + roomNumber +
+                ", hotel= '" + hotel.getHotelName() + '\'' +
                 ", price = $" + price* ChronoUnit.DAYS.between(LocalDate.now(),checkout) +
                 ", roomType= '" + roomType + '\'' ;
     }

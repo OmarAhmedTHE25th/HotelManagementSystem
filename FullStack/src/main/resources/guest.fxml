@@ -17,13 +17,12 @@
 
 
             <HBox spacing="10">
+                <ComboBox fx:id="hotelActionCombo" promptText="Hotel to Cancel/Checkout" />
                 <TextField fx:id="roomActionField" promptText="Room Number"/>
                 <Button text="Cancel Reservation" onAction="#onCancelReservation"/>
                 <Button text="Checkout" onAction="#onCheckoutRoom"/>
                 <Button text="Complain" onAction="#onComplain"/>
-
             </HBox>
-
 
             <Button text="Logout" onAction="#onLogout"/>
         </HBox>
@@ -40,6 +39,7 @@
                 <Label text="Available Rooms" styleClass="header-small"/>
                 <TableView fx:id="roomTable" VBox.vgrow="ALWAYS">
                     <columns>
+
                         <TableColumn fx:id="numberCol" text="Room #"/>
                         <TableColumn fx:id="typeCol" text="Type"/>
                         <TableColumn fx:id="priceCol" text="Price per night ($)"/>
@@ -59,6 +59,7 @@
             <TextArea fx:id="myReservationsArea" prefRowCount="4" editable="false"/>
             <TableView fx:id="reservationsTable" prefHeight="200">
                 <columns>
+                    <TableColumn fx:id="resHotelCol" text="Hotel"/>
                     <TableColumn fx:id="resRoomCol" text="Room Number"/>
                     <TableColumn fx:id="resPriceCol" text="Price"/>
                     <TableColumn fx:id="resCheckoutCol" text="Checkout Date"/>

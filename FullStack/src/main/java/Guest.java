@@ -73,7 +73,7 @@ public void makeReservation(int roomNumber, LocalDate checkout)
     wallet.Pay(currRoom.price*(ChronoUnit.DAYS.between(LocalDate.now(), checkout)));
  roomsReserved.add(currRoom);
 }
-    public void cancelReservation(int roomNumber)
+    public void cancelReservation(int roomNumber,Hotel hotel)
     {
         if (roomsReserved.isEmpty())
             throw new IllegalArgumentException("No Reservations to cancel");
@@ -83,7 +83,7 @@ public void makeReservation(int roomNumber, LocalDate checkout)
         while (it.hasNext()) {
             Room room = it.next();
 
-            if (room.roomNumber == roomNumber) {
+            if (room.roomNumber == roomNumber&& room.hotel.getHotelName().equals(hotel.getHotelName())) {
                 room.available = true;
                 it.remove(); // safe
 
@@ -95,14 +95,14 @@ public void makeReservation(int roomNumber, LocalDate checkout)
             }
         }
 
-        throw new IllegalArgumentException("Room number invalid");
+        throw new IllegalArgumentException("Room number invalid in Selected Hotel");
     }
 
-public boolean checkout(int roomNumber)
+public boolean checkout(int roomNumber,Hotel hotel)
 {
     for(Room room: roomsReserved)
     {
-        if (room.roomNumber == roomNumber) {
+        if (room.roomNumber == roomNumber&& room.hotel.getHotelName().equals(hotel.getHotelName())) {
             room.available = true;
             roomsReserved.remove(room);
             return true;

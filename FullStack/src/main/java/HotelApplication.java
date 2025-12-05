@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Objects;
-
+import javafx.scene.image.Image;
 public class HotelApplication extends Application {
 
     private static Scene scene;
@@ -19,6 +19,7 @@ public class HotelApplication extends Application {
         scene = new Scene(loadFXML("login"), 800, 600);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
         stage.setTitle("Hotel Management System");
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/img.png")).toExternalForm()));
         stage.setScene(scene);
         stage.show();
     }

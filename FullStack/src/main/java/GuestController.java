@@ -36,7 +36,7 @@ public class GuestController {
 
         hotelList.setItems(FXCollections.observableArrayList(Database.getInstance().hotels));
 
-        hotelList.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+        hotelList.getSelectionModel().selectedItemProperty().addListener((_, _, newVal) -> {
             if (newVal != null) {
                 try {
                     guest.chooseHotel(newVal.getHotelName());
@@ -145,10 +145,6 @@ public class GuestController {
 
             }
             class SimpleBinary {
-                // As a static method
-                public static int get01() {
-                    return new Random().nextInt(2);
-                }
 
                 // Or even simpler
                 public static int flip() {
@@ -183,11 +179,7 @@ public class GuestController {
 
         try {
             int roomNumber = Integer.parseInt(roomActionField.getText());
-            int cancelled =0;
-
-//if (cancelled>=3)HotelApplication.showAlert("We Hate you", "The Hotel Staff wish you ");
             g.cancelReservation(roomNumber);
-            cancelled++;
             HotelApplication.showAlert("Canceled", "Reservation canceled. Refund issued.");
 
             reservationsTable.getItems().setAll(g.getRoomsReserved());

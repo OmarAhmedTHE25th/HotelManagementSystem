@@ -4,6 +4,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -37,7 +39,7 @@ public class GuestController {
         hotelList.setItems(FXCollections.observableArrayList(Database.getInstance().hotels));
         hotelActionCombo.setItems(FXCollections.observableArrayList(Database.getInstance().hotels));
         // 1. Customize how items look in the dropdown list (Cell Factory)
-        hotelActionCombo.setCellFactory(lv -> new ListCell<Hotel>() {
+        hotelActionCombo.setCellFactory(_ -> new ListCell<>() {
             @Override
             protected void updateItem(Hotel item, boolean empty) {
                 super.updateItem(item, empty);
@@ -47,7 +49,7 @@ public class GuestController {
         });
 
         // 2. Customize how the selected item looks in the combo box button (Button Cell)
-        hotelActionCombo.setButtonCell(new ListCell<Hotel>() {
+        hotelActionCombo.setButtonCell(new ListCell<>() {
             @Override
             protected void updateItem(Hotel item, boolean empty) {
                 super.updateItem(item, empty);
@@ -87,7 +89,7 @@ public class GuestController {
         refreshReservations();
     }
 
-    private void loadRooms(Hotel hotel) {
+    private void loadRooms(@NotNull Hotel hotel) {
         roomTable.setItems(FXCollections.observableArrayList(
                 hotel.getRooms().stream().filter(r -> r.available).toList()
         ));
@@ -401,7 +403,7 @@ public class GuestController {
 
         dialog.showAndWait().ifPresent(result -> {
 
-            // --- ADD CHAOS HERE ---
+
             String complaint = result.trim();
             int length = complaint.length();
 
@@ -439,7 +441,7 @@ public class GuestController {
                         rejectionMessage + "\n\nSystem Response: " + new Insults().getRandomInsult());
                 return;
             }
-            // --- END CHAOS ---
+
 
             HotelApplication.showAlert("Complaint", "Thank for your time. Your complaint will be processed soon :-}");
         });

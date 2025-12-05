@@ -24,7 +24,7 @@ public class LoginController {
             regRole.setValue("Guest");
 
 
-            regRole.valueProperty().addListener((obs, oldVal, newVal) -> {
+            regRole.valueProperty().addListener((_, _, newVal) -> {
                 if (newVal.equals("Hotel Admin")) {
                     regHotelName.setDisable(false);
                     regHotelName.setVisible(true);

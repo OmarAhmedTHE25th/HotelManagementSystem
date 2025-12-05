@@ -7,7 +7,8 @@ import javafx.scene.control.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-
+import java.util.ArrayList;
+import java.util.Random;
 
 public class GuestController {
 
@@ -81,13 +82,81 @@ public class GuestController {
         }
 
         try {
+            class Insults {
+                private final ArrayList<String> insults;
+                private final Random random;
+
+                public Insults() {
+                    insults = new ArrayList<>();
+                    random = new Random();
+                    initializeInsults();
+                }
+
+                private void initializeInsults() {
+                    // Brutally Honest Insults
+                    insults.add("Even a goldfish has better planning skills. Maximum is 5 rooms.");
+                    insults.add("Congratulations! You've discovered the boundary between 'guest' and 'nuisance'.");
+                    insults.add("Your ambition exceeds your intelligence. 5 rooms. Not 6. Count them on your fingers if needed.");
+
+                    // Sarcastic & Condescending
+                    insults.add("Oh, trying to book the entire hotel? How adorable. The limit is 5.");
+                    insults.add("Did you mistake this for your personal palace? We have standards. 5 rooms max.");
+                    insults.add("Even a circus needs fewer clowns than rooms you're trying to book.");
+
+                    // Short & Savage One-Liners
+                    insults.add("Room greed detected. Rejected.");
+                    insults.add("No.");
+                    insults.add("Are you opening a zoo? 5 rooms max.");
+                    insults.add("Your entitlement is showing. 5 rooms.");
+                    insults.add("This isn't a timeshare scam. 5 rooms.");
+
+                    // Hotel-Themed Roasts
+                    insults.add("We're a hotel, not your inheritance. 5 rooms maximum.");
+                    insults.add("The fire marshal says 'no' and frankly, so do we.");
+                    insults.add("Even wedding parties have less drama than you. 5 rooms.");
+                    insults.add("Housekeeping already hates you. Don't make it worse.");
+
+                    // Creative & Unhinged
+                    insults.add("ERROR: Delusions of grandeur detected. Maximum capacity: 5 rooms.");
+                    insults.add("Booking failed. Your imaginary entourage doesn't need real rooms.");
+                    insults.add("If you need more than 5 rooms, your family reunion has deeper issues.");
+                    insults.add("We count rooms here, not your poor life choices. 5 max.");
+
+                    // For Maximum Chaos (School Project Edition)
+                    insults.add("Professor Johnson warned us about students like you. 5 rooms.");
+                    insults.add("This isn't the group project you can freeload on. 5 rooms.");
+                    insults.add("Your grade on this project would be higher than your room request. Denied.");
+
+                    // Bonus Insults (because why not?)
+                    insults.add("The only thing overflowing here is your audacity. 5 rooms.");
+                    insults.add("We have a VIP section, but you're not in it. 5 rooms max.");
+                    insults.add("Even my code has more common sense than you. Maximum: 5 rooms.");
+                    insults.add("Do you also try to order 12 drinks at a bar? 5 rooms. Period.");
+                    insults.add("The hotel's capacity is less than your ego. 5 rooms.");
+                }
+
+                // Get a random insult
+                public String getRandomInsult() {
+                    if (insults.isEmpty()) {
+                        return "I'd insult you but I'm out of creativity. Also, 5 rooms max.";
+                    }
+                    return insults.get(random.nextInt(insults.size()));
+                }
+
+            }
+            Insults insult = new Insults();
             if (guest.wallet.getBalance() < selected.price)throw new IllegalArgumentException("No Poor People Allowed!");
             guest.makeReservation(selected.roomNumber, date);
             HotelApplication.showAlert("Success", "Room Reserved!");
+            if(guest.getRoomsReserved().size() > 5) HotelApplication.showAlert("Too many rooms", insult.getRandomInsult());
             loadRooms(selected.hotel);
             refreshReservations();
             updateWallet();
-        } catch (Exception e) {
+        }
+
+
+
+        catch (Exception e) {
             HotelApplication.showError(e.getMessage());
         }
     }

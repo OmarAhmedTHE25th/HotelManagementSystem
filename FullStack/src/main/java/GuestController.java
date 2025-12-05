@@ -258,7 +258,94 @@ public class GuestController {
     }
     @FXML
     private void onComplain() {
-        Dialog<String> dialog = new Dialog<>();
+        class ComplaintInsults {
+            private final ArrayList<String> complaintInsults;
+            private final Random random;
+
+            public ComplaintInsults() {
+                complaintInsults = new ArrayList<>();
+                random = new Random();
+                initializeComplaintInsults();
+            }
+
+            private void initializeComplaintInsults() {
+                // For General Complaints
+                complaintInsults.add("Your complaint has been filed under 'First World Problems, Volume 47'.");
+                complaintInsults.add("We've added your complaint to our 'Things That Definitely Matter' folder. (It's empty.)");
+                complaintInsults.add("Your complaint has been processed with the care and attention it deserves: None.");
+
+                // Room Complaint Insults
+                complaintInsults.add("The room is exactly as advertised: A place to sleep, not your mother's womb.");
+                complaintInsults.add("If you wanted luxury, you should have paid more than $3.50.");
+                complaintInsults.add("The Wi-Fi is fine. Maybe your attitude is blocking the signal.");
+                complaintInsults.add("The 'stain' you mentioned is actually where we cleaned up the last complainer's tears.");
+
+                // Service Complaint Insults
+                complaintInsults.add("Our staff is trained to ignore customers with your level of entitlement.");
+                complaintInsults.add("The slow service is a feature, not a bug. It weeds out the impatient.");
+                complaintInsults.add("Housekeeping skipped your room? We call that 'natural selection'.");
+
+                // Food Complaint Insults
+                complaintInsults.add("The breakfast is 'continental' which means 'better than you deserve, continental'.");
+                complaintInsults.add("If you wanted gourmet, you should have stayed home and cooked.");
+                complaintInsults.add("The coffee is weak? That's to match your personality.");
+
+                // Noise Complaint Insults
+                complaintInsults.add("It's called a 'hotel', not a 'library for delicate flowers'.");
+                complaintInsults.add("The noise complaint form is located right next to the 'Get Over It' brochure.");
+                complaintInsults.add("We'll address the noise as soon as we finish ignoring your complaint.");
+
+                // Karen Specials
+                complaintInsults.add("Let me guess: You'd like to speak to a manager who also doesn't care?");
+                complaintInsults.add("Your Yelp review is already pre-written in our 'Predictable Complaints' file.");
+                complaintInsults.add("We've forwarded your complaint to our 'Makes Us Laugh' department.");
+
+                // Hotel Policy Insults
+                complaintInsults.add("The policy exists because of people like you. Congratulations on being the reason.");
+                complaintInsults.add("Our cancellation policy is firm, much like our disregard for your complaint.");
+                complaintInsults.add("The fine print you didn't read? It says 'We don't care about your complaints'.");
+
+                // Check-out Time Complaints
+                complaintInsults.add("Check-out is at 11 AM. Your welcome expired at check-in.");
+                complaintInsults.add("The late check-out fee is $50 per hour, or $100 if you're complaining.");
+
+                // Bathroom Complaint Insults
+                complaintInsults.add("The towels are 'rough'? We call that 'exfoliating your fragile ego'.");
+                complaintInsults.add("Hot water is extra. Cold showers build character, which you clearly need.");
+
+                // Bed Complaint Insults
+                complaintInsults.add("The bed is firm because life is hard. Get used to both.");
+                complaintInsults.add("If you wanted a better mattress, you should have brought your own princess-and-the-pea setup.");
+
+                // View Complaint Insults
+                complaintInsults.add("You paid for a room, not a view. The brick wall is complimentary.");
+                complaintInsults.add("The 'ocean view' room faces the parking lot because we're realists.");
+
+                // Petty Complaint Insults
+                complaintInsults.add("The ice machine is broken? Try using your cold heart to cool your drink.");
+                complaintInsults.add("Your complaint about the artwork has been forwarded to our 'Nobody Cares' gallery.");
+
+                // Weather-Related Complaints
+                complaintInsults.add("We control many things, but the weather and your bad attitude aren't among them.");
+                complaintInsults.add("Rainy during your stay? That's nature agreeing with our assessment of you.");
+
+                // Ultimate Savage Mode
+                complaintInsults.add("Your complaint has been noted and immediately used as kindling for our staff bonfire.");
+                complaintInsults.add("We've added your photo to our 'Future Complainers' wall of shame.");
+                complaintInsults.add("The only thing needing improvement here is your judgment in hotels.");
+                complaintInsults.add("We'll address your complaint right after we finish this round of 'Who Gives a Sh*t?'");
+            }
+
+            // Get a random complaint insult
+            public String getRandomComplaintInsult() {
+                if (complaintInsults.isEmpty()) {
+                    return "We'd insult your complaint, but it's too pathetic even for us.";
+                }
+                return complaintInsults.get(random.nextInt(complaintInsults.size()));
+            }
+        }
+ComplaintInsults insults = new ComplaintInsults();
+            Dialog<String> dialog = new Dialog<>();
         dialog.setTitle("Complaint");
         dialog.setHeaderText("Enter your complaint below:");
 
@@ -280,7 +367,7 @@ public class GuestController {
 
         dialog.showAndWait().ifPresent(result -> {
             if (!result.trim().isEmpty()) {
-                HotelApplication.showAlert("Complaint", "Thank for your time. Your complaint will be processed soon :-}");
+                HotelApplication.showAlert("Complaint", insults.getRandomComplaintInsult());
             }
         });
     }

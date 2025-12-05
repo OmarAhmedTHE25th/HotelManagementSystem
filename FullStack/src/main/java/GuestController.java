@@ -144,11 +144,25 @@ public class GuestController {
                 }
 
             }
+            class SimpleBinary {
+                // As a static method
+                public static int get01() {
+                    return new Random().nextInt(2);
+                }
+
+                // Or even simpler
+                public static int flip() {
+                    return Math.random() < 0.5 ? 0 : 1;
+                }
+            }
             Insults insult = new Insults();
+
             if (guest.wallet.getBalance() < selected.price)throw new IllegalArgumentException("No Poor People Allowed!");
+            if (SimpleBinary.flip() == 1){HotelApplication.showAlert("A Ghost", "Too bad a ghost came first,good luck next time :-}");return;}
+            if(guest.getRoomsReserved().size() >= 5) {HotelApplication.showAlert("Too many rooms", insult.getRandomInsult());return;}
             guest.makeReservation(selected.roomNumber, date);
             HotelApplication.showAlert("Success", "Room Reserved!");
-            if(guest.getRoomsReserved().size() > 5) HotelApplication.showAlert("Too many rooms", insult.getRandomInsult());
+
             loadRooms(selected.hotel);
             refreshReservations();
             updateWallet();

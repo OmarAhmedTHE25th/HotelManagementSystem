@@ -29,6 +29,24 @@
                     <Label text="Actions" styleClass="header-small"/>
                     <Button text="View Total Revenue" onAction="#onViewRevenue" maxWidth="Infinity"/>
                     <Button text="Flag Overdue Customers" onAction="#onFlagOverdue" maxWidth="Infinity"/>
+                    <Button text="RESIGN &amp; LOG OUT FOREVER"
+                            onAction="#onResign"
+                            style="-fx-background-color: #e74c3c; -fx-text-fill: white;"
+                            maxWidth="Infinity"/>
+                </VBox>
+
+            </HBox>
+            <HBox spacing="20">
+                <VBox spacing="10" styleClass="card" HBox.hgrow="ALWAYS">
+                </VBox>
+
+                <VBox spacing="10" styleClass="card" HBox.hgrow="ALWAYS">
+                </VBox>
+
+                <VBox spacing="10" styleClass="card" HBox.hgrow="ALWAYS">
+                    <Label text="Reluctant Salary Payment" styleClass="header-small"/>
+                    <TextField fx:id="hotelAdminIDField" promptText="Hotel Admin ID to pay"/>
+                    <Button text="Toss $50 Salary" onAction="#onGiveSalary" styleClass="action-btn" maxWidth="Infinity"/>
                 </VBox>
             </HBox>
 

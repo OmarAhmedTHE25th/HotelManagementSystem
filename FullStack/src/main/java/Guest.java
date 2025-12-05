@@ -61,18 +61,43 @@ public void chooseHotel(String name)
 
     throw new IllegalArgumentException("Hotel Name Invalid");
 }
-public void makeReservation(int roomNumber, LocalDate checkout)
-{
-    for(Room room: roomsReserved)
-        if (LocalDate.now().isAfter(room.checkout)) {
-            room.price*=2;
-            throw new IllegalArgumentException("PAY UP!!");
-        }
+    public void makeReservation(int roomNumber, LocalDate checkout)
+    {
+        for(Room room: roomsReserved)
+            if (LocalDate.now().isAfter(room.checkout)) {
+                room.price*=2;
+                throw new IllegalArgumentException("PAY UP!!");
+            }
 
- Room currRoom = currhotel.reserveRoom(roomNumber,checkout);
-    wallet.Pay(currRoom.price*(ChronoUnit.DAYS.between(LocalDate.now(), checkout)));
- roomsReserved.add(currRoom);
-}
+        // 1. RESERVE THE ROOM (This sets room.available = false internally)
+        Room currRoom = currhotel.reserveRoom(roomNumber,checkout);
+
+        try {
+            // Calculate the total price before attempting payment
+            double totalPrice = currRoom.price * ChronoUnit.DAYS.between(LocalDate.now(), checkout);
+
+            // 2. ATTEMPT PAYMENT
+            wallet.Pay(totalPrice);
+
+            // 3. IF PAYMENT SUCCEEDS, FINALIZE THE RESERVATION
+            roomsReserved.add(currRoom);
+
+        } catch (Exception e) {
+
+            currRoom.available = true;
+            currRoom.setCheckout(null);
+
+            // Re-throw the original error so the GuestController can display it.
+            throw e;
+        }
+    }
+
+
+
+
+
+
+
     public void cancelReservation(int roomNumber,Hotel hotel)
     {
         if (roomsReserved.isEmpty())

@@ -1,6 +1,7 @@
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.io.IOException;
+import java.util.Objects;
 
 public class AdminController {
 
@@ -20,7 +21,7 @@ public class AdminController {
     @FXML
     private void onCreateHotel() {
         try {
-            if (hotelNameField.getText()==null|| ratingCombo.getValue()==null|| hotelAddressField.getText()==null)throw new IllegalArgumentException("Sorry, Ghost Hotels arent on the menu.");
+            if (Objects.equals(hotelNameField.getText(), "") || ratingCombo.getValue()==null|| Objects.equals(hotelAddressField.getText(), ""))throw new IllegalArgumentException("Just because you are super doesnt mean you are super natural!");
             admin.createHotel(hotelNameField.getText(), ratingCombo.getValue(), hotelAddressField.getText());
             HotelApplication.showAlert("Success", "Hotel Created");
             updateHotelList();

@@ -114,7 +114,6 @@
                     <HBox alignment="CENTER_LEFT" spacing="12">
                         <Label text="🏢 All Hotels in System" styleClass="header-small"/>
                         <Region HBox.hgrow="ALWAYS"/>
-                        <Label fx:id="hotelCountLabel" text="0 hotels" styleClass="text-muted"/>
                     </HBox>
 
                     <Separator/>

@@ -22,9 +22,10 @@
                 <Button text="Cancel Reservation" onAction="#onCancelReservation"/>
                 <Button text="Checkout" onAction="#onCheckoutRoom"/>
                 <Button text="Complain" onAction="#onComplain"/>
+                <Button text="Logout" onAction="#onLogout"/>
             </HBox>
 
-            <Button text="Logout" onAction="#onLogout"/>
+
         </HBox>
     </top>
     <center>

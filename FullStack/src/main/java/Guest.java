@@ -2,7 +2,9 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Guest extends User{
     private String password;
@@ -145,13 +147,29 @@ public String viewReservations()
     return info.toString();
 }
 
-public void Search(String hotelname)
-{
-    if (hotelname==null)throw new IllegalArgumentException("Sorry we dont support mind reading!");
-for (Hotel hotel: Database.getInstance().hotels)
-    if (hotel.getHotelName().equals(hotelname))return;
-throw new IllegalArgumentException("Whose that?");
-}
+    public List<Hotel> searchHotels(String query, Ratings minRating) {
+
+        // Start with all hotels
+        List<Hotel> availableHotels = Database.getInstance().hotels;
+
+        // 1. Filter by Text Query (Hotel Name or Location)
+        if (query != null && !query.trim().isEmpty()) {
+            final String lowerCaseQuery = query.trim().toLowerCase();
+            availableHotels = availableHotels.stream()
+                    .filter(h -> h.getHotelName().toLowerCase().contains(lowerCaseQuery) ||
+                            h.getLocation().toLowerCase().contains(lowerCaseQuery))
+                    .collect(Collectors.toList());
+        }
+
+        // 2. Filter by Rating (if a minimum rating is selected)
+        if (minRating != null) {
+            availableHotels = availableHotels.stream()
+                    .filter(h -> h.rating.ordinal() <= minRating.ordinal())
+                    .collect(Collectors.toList());
+        }
+
+        return availableHotels;
+    }
     @Override
     public String toString() {
         return

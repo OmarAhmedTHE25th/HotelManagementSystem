@@ -2,6 +2,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.jetbrains.annotations.NotNull;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class GuestController {
@@ -28,6 +30,8 @@ public class GuestController {
     @FXML private TableColumn<Room, String> resCheckoutCol;
     @FXML private TextField roomActionField;
     @FXML private ComboBox<Hotel> hotelActionCombo;
+    @FXML private TextField searchField;
+    @FXML private ComboBox<Ratings> ratingFilterCombo;
     private Guest guest;
     @FXML private TableColumn<Room, String> resHotelCol;
     @FXML
@@ -36,6 +40,13 @@ public class GuestController {
         welcomeLabel.setText("Welcome, " + guest.username);
         updateWallet();
 
+        ratingFilterCombo.getItems().addAll(Ratings.values()); //
+
+        // Initial load of all hotels using the new helper function
+        refreshHotelList(null);
+
+        // We only need to populate the action combo with ALL hotels once
+        hotelActionCombo.setItems(FXCollections.observableArrayList(Database.getInstance().hotels));
         hotelList.setItems(FXCollections.observableArrayList(Database.getInstance().hotels));
         hotelActionCombo.setItems(FXCollections.observableArrayList(Database.getInstance().hotels));
         // 1. Customize how items look in the dropdown list (Cell Factory)
@@ -94,6 +105,38 @@ public class GuestController {
                 hotel.getRooms().stream().filter(r -> r.available).toList()
         ));
     }
+
+    @FXML
+    private void onSearch() {
+        try {
+            String query = searchField.getText();
+            Ratings minRating = ratingFilterCombo.getValue();
+
+            // Call the improved search method from Guest.java
+            List<Hotel> results = guest.searchHotels(query, minRating);
+
+            // Update the ListView with the search results
+            refreshHotelList(results);
+
+            HotelApplication.showAlert("Search Complete", "Found " + results.size() + " hotels matching your criteria.");
+
+        } catch (Exception e) {
+            HotelApplication.showError(e.getMessage());
+        }
+    }
+
+    // --- ADD/MODIFY HELPER METHOD ---
+// This method is now used for both initial load and search results
+    private void refreshHotelList(List<Hotel> results) {
+        if (results == null) {
+            // Load all hotels if no results are provided (initial load)
+            results = Database.getInstance().hotels;
+        }
+
+        // Update the main hotel list
+        hotelList.setItems(FXCollections.observableArrayList(results));
+    }
+
     static class Insults {
         private final ArrayList<String> insults;
         private final Random random;

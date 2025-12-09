@@ -31,6 +31,15 @@
         <SplitPane dividerPositions="0.3">
             <VBox spacing="10">
                 <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+                <VBox spacing="5" style="-fx-padding: 10; -fx-border-color: #ccc; -fx-border-radius: 5;">
+                    <Label text="Hotel Search &amp; Filter" styleClass="header-small"/>
+                    <HBox spacing="5" alignment="CENTER_LEFT">
+                        <TextField fx:id="searchField" promptText="City or Hotel Name" HBox.hgrow="ALWAYS"/>
+                        <Button text="Search" onAction="#onSearch" styleClass="action-btn"/>
+                    </HBox>
+                    <ComboBox fx:id="ratingFilterCombo" promptText="Min Rating" maxWidth="Infinity"/>
+                </VBox>
                 <Label text="Select Hotel" styleClass="header-small"/>
                 <ListView fx:id="hotelList" VBox.vgrow="ALWAYS"/>
             </VBox>

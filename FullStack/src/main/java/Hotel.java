@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Hotel {
     private String hotelName;
-    private Ratings rating;
+    Ratings rating;
     private String address;
     private final ArrayList<Room> rooms = new ArrayList<>();
 Hotel(){}

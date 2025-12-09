@@ -2,6 +2,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 public class AdminController {
 
@@ -71,7 +72,6 @@ public class AdminController {
 
     @FXML
     private void onResign() {
-
         // --- 1. The Initial Threat ---
         if (showSarcasticConfirmation("1/5: Final Warning!",
                 "This is your last chance to turn back. You're giving up ALL power.",
@@ -128,10 +128,9 @@ public class AdminController {
         confirm.setTitle(title);
         confirm.setHeaderText(header);
         confirm.setContentText(content);
-        // Returns true if the user clicks 'OK', false if they click 'Cancel'
-        if (confirm.showAndWait().isPresent())
-         return confirm.showAndWait().get() != ButtonType.OK;
 
-        return false;
+        Optional<ButtonType> result = confirm.showAndWait(); // only call once
+        return result.isPresent() && result.get() == ButtonType.CANCEL; // true if OK, false if Cancel
     }
+
 }

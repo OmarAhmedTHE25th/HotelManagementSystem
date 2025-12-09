@@ -340,6 +340,10 @@
     -fx-cursor: hand;
 }
 
+/* Ensure your action buttons specifically have enough breathing room */
+.action-btn {
+    -fx-padding: 8 15; /* Top/Bottom 8px, Left/Right 15px */
+}
 .titled-pane > .content {
     -fx-background-color: white;
     -fx-border-color: #e2e8f0;
@@ -403,22 +407,7 @@
     -fx-font-size: 16px;
 }
 
-/* Animations */
-@keyframes fadeIn {
-    from { -fx-opacity: 0; }
-    to { -fx-opacity: 1; }
-}
 
-@keyframes slideUp {
-    from {
-        -fx-opacity: 0;
-        -fx-translate-y: 20;
-    }
-    to {
-        -fx-opacity: 1;
-        -fx-translate-y: 0;
-    }
-}
 
 /* Utility Classes */
 .spacing-small { -fx-spacing: 8; }

@@ -21,114 +21,42 @@
         <VBox styleClass="card" style="-fx-max-width: 440;">
 
             <!-- Tab Pane -->
-            <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" style="-fx-border-width: 0;">
+            <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
+                <Tab text="Login">
+                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent;">
+                        <VBox spacing="10" alignment="CENTER">
+                            <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
 
-                <!-- Login Tab -->
-                <Tab text="Sign In">
-                    <VBox spacing="20" alignment="CENTER" style="-fx-padding: 32 24 32 24;">
+                            <ComboBox fx:id="roleCombo" promptText="Select Role" maxWidth="Infinity"/>
+                            <TextField fx:id="usernameField" promptText="Username"/>
+                            <TextField fx:id="idField" promptText="ID"/>
+                            <PasswordField fx:id="passwordField" promptText="Password"/>
 
-                        <!-- Role Selection -->
-                        <VBox spacing="8" style="-fx-pref-width: 100%;">
-                            <Label text="Account Type" styleClass="section-title"/>
-                            <ComboBox fx:id="roleCombo" promptText="Select your role"
-                                      style="-fx-pref-width: 100%;"/>
-                        </VBox>
-
-                        <!-- Credentials -->
-                        <VBox spacing="8" style="-fx-pref-width: 100%;">
-                            <Label text="Username" styleClass="section-title"/>
-                            <TextField fx:id="usernameField" promptText="Enter your username"
-                                       style="-fx-pref-width: 100%;"/>
-                        </VBox>
-
-                        <VBox spacing="8" style="-fx-pref-width: 100%;">
-                            <Label text="ID Number" styleClass="section-title"/>
-                            <TextField fx:id="idField" promptText="Enter your ID"
-                                       style="-fx-pref-width: 100%;"/>
-                        </VBox>
-
-                        <VBox spacing="8" style="-fx-pref-width: 100%;">
-                            <Label text="Password" styleClass="section-title"/>
-                            <PasswordField fx:id="passwordField" promptText="Enter your password"
-                                           style="-fx-pref-width: 100%;"/>
-                        </VBox>
-
-                        <!-- Login Button -->
-                        <Button text="Sign In" onAction="#onLogin"
-                                styleClass="action-btn"
-                                style="-fx-pref-width: 100%; -fx-pref-height: 44;"/>
-
-                        <!-- Info Text -->
-                        <Label text="Don't have an account? Switch to Sign Up tab"
-                               styleClass="text-muted"
-                               style="-fx-font-size: 12px;"/>
-                    </VBox>
-                </Tab>
-
-                <!-- Register Tab -->
-                <Tab text="Sign Up">
-                    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
-                        <VBox spacing="20" alignment="CENTER" style="-fx-padding: 32 24 32 24;">
-
-                            <!-- Role Selection -->
-                            <VBox spacing="8" style="-fx-pref-width: 100%;">
-                                <Label text="Account Type" styleClass="section-title"/>
-                                <ComboBox fx:id="regRole" promptText="Select account type"
-                                          style="-fx-pref-width: 100%;"/>
-                            </VBox>
-
-                            <!-- Personal Information -->
-                            <VBox spacing="8" style="-fx-pref-width: 100%;">
-                                <Label text="Username" styleClass="section-title"/>
-                                <TextField fx:id="regUsername" promptText="Choose a username"
-                                           style="-fx-pref-width: 100%;"/>
-                            </VBox>
-
-                            <VBox spacing="8" style="-fx-pref-width: 100%;">
-                                <Label text="ID Number" styleClass="section-title"/>
-                                <TextField fx:id="regId" promptText="Enter your ID number"
-                                           style="-fx-pref-width: 100%;"/>
-                            </VBox>
-
-                            <VBox spacing="8" style="-fx-pref-width: 100%;">
-                                <Label text="Password" styleClass="section-title"/>
-                                <PasswordField fx:id="regPass"
-                                               promptText="Min 8 chars, include special character"
-                                               style="-fx-pref-width: 100%;"/>
-                                <Label text="Must be 8+ characters with special character and number"
-                                       style="-fx-font-size: 11px; -fx-text-fill: #64748b;"/>
-                            </VBox>
-
-                            <VBox spacing="8" style="-fx-pref-width: 100%;">
-                                <Label text="Date of Birth" styleClass="section-title"/>
-                                <DatePicker fx:id="regDob" promptText="Select your birthday"
-                                            style="-fx-pref-width: 100%;"/>
-                            </VBox>
-
-                            <!-- Hotel Admin Only Field -->
-                            <VBox fx:id="hotelNameBox" spacing="8" style="-fx-pref-width: 100%;"
-                                  visible="false" managed="false">
-                                <Label text="Hotel Assignment" styleClass="section-title"/>
-                                <TextField fx:id="regHotelName"
-                                           promptText="Enter hotel name you'll manage"
-                                           style="-fx-pref-width: 100%;"/>
-                                <Label text="You must enter the exact name of an existing hotel"
-                                       style="-fx-font-size: 11px; -fx-text-fill: #f59e0b;"/>
-                            </VBox>
-
-                            <!-- Register Button -->
-                            <Button text="Create Account" onAction="#onRegister"
-                                    styleClass="action-btn"
-                                    style="-fx-pref-width: 100%; -fx-pref-height: 44;"/>
-
-                            <!-- Info Text -->
-                            <Label text="Already have an account? Switch to Sign In tab"
-                                   styleClass="text-muted"
-                                   style="-fx-font-size: 12px;"/>
+                            <Button text="Login" onAction="#onLogin" styleClass="action-btn" maxWidth="Infinity"/>
                         </VBox>
                     </ScrollPane>
                 </Tab>
 
+                <Tab text="Sign Up">
+                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent;">
+                        <VBox spacing="10" alignment="CENTER">
+                            <padding>
+                                <Insets top="20" right="20" bottom="20" left="20"/>
+                            </padding>
+
+                            <ComboBox fx:id="regRole" promptText="Select Role" maxWidth="Infinity"/>
+
+                            <TextField fx:id="regUsername" promptText="Username"/>
+                            <TextField fx:id="regId" promptText="ID"/>
+                            <PasswordField fx:id="regPass" promptText="Password (must include special char)"/>
+                            <DatePicker fx:id="regDob" promptText="Birthday" maxWidth="Infinity"/>
+
+                            <TextField fx:id="regHotelName" promptText="Hotel Name" maxWidth="Infinity" visible="false" disable="true"/>
+
+                            <Button text="Create Account" onAction="#onRegister" styleClass="action-btn" maxWidth="Infinity"/>
+                        </VBox>
+                    </ScrollPane>
+                </Tab>
             </TabPane>
         </VBox>
 

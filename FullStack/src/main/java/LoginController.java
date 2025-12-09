@@ -13,6 +13,8 @@ public class LoginController {
     @FXML private TabPane tabPane;
     @FXML private VBox hotelNameBox;
 
+
+
     @FXML
     public void initialize() {
         // Initialize login role combo
@@ -26,27 +28,29 @@ public class LoginController {
             regRole.getItems().addAll("Guest", "Admin", "Hotel Admin");
             regRole.setValue("Guest");
 
-            // Add listener to show/hide hotel name field
+            // Initialize the field to be hidden AND unmanaged (so it takes no space)
+            if (regHotelName != null) {
+                regHotelName.setVisible(false);
+                regHotelName.setManaged(false); // Collapses the space
+            }
+
             regRole.valueProperty().addListener((_, _, newVal) -> {
-                if (newVal.equals("Hotel Admin")) {
-                    if (hotelNameBox != null) {
-                        hotelNameBox.setVisible(true);
-                        hotelNameBox.setManaged(true);
-                    }
-                    if (regHotelName != null) {
-                        regHotelName.setDisable(false);
-                    }
+                if (regHotelName == null) return;
+
+                if ("Hotel Admin".equals(newVal)) {
+                    // Show the field
+                    regHotelName.setVisible(true);
+                    regHotelName.setManaged(true); // Allocate space for it
+                    regHotelName.setDisable(false); // Make it typable
                 } else {
-                    if (hotelNameBox != null) {
-                        hotelNameBox.setVisible(false);
-                        hotelNameBox.setManaged(false);
-                    }
-                    if (regHotelName != null) {
-                        regHotelName.setDisable(true);
-                    }
+                    // Hide the field
+                    regHotelName.setVisible(false);
+                    regHotelName.setManaged(false); // Remove space
+                    regHotelName.setDisable(true);
                 }
             });
         }
+
     }
 
     @FXML

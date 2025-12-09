@@ -138,6 +138,8 @@ public class HotelApplication extends Application {
             // New VIP Test Guest
             Guest.signUp("vipguest", "devpass", LocalDate.of(1975, 5, 20), "G3");
 
+            HotelAdmin.signUp("Hadmin","devpass",LocalDate.of(1990,8,3),"H1",h1);
+
         } catch (Exception ignored) {}
     }
 

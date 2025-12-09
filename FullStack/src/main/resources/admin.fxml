@@ -32,7 +32,8 @@
                         <Label text="Total Revenue" style="-fx-font-size: 13px; -fx-opacity: 0.9;"/>
                         <Label text="Click to Update ↓" style="-fx-font-size: 20px; -fx-font-weight: 700;"/>
                         <Button text="Calculate Revenue" onAction="#onViewRevenue"
-                                style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-weight: 600; -fx-pref-width: 100%;"/>
+                                style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-weight: 600;"
+                                HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="40"/>
                     </VBox>
 
                     <!-- Actions Card -->
@@ -40,7 +41,8 @@
                         <Label text="System Actions" style="-fx-font-size: 13px; -fx-opacity: 0.9;"/>
                         <Label text="Manage System" style="-fx-font-size: 20px; -fx-font-weight: 700;"/>
                         <Button text="Flag Overdue Guests" onAction="#onFlagOverdue"
-                                style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-weight: 600; -fx-pref-width: 100%;"/>
+                                style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-weight: 600;"
+                                HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="40"/>
                     </VBox>
                 </HBox>
 
@@ -48,43 +50,41 @@
                 <GridPane hgap="16" vgap="16">
 
                     <!-- Create Hotel Card -->
-                    <VBox spacing="12" styleClass="card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <VBox spacing="12" styleClass="card" GridPane.columnIndex="0" GridPane.rowIndex="0" HBox.hgrow="ALWAYS">
                         <Label text="🏨 Create New Hotel" styleClass="header-small"/>
 
-                        <VBox spacing="8">
+                        <VBox spacing="6">
                             <Label text="Hotel Name" styleClass="section-title"/>
-                            <TextField fx:id="hotelNameField" promptText="Enter hotel name"/>
+                            <TextField fx:id="hotelNameField" promptText="Enter hotel name" HBox.hgrow="ALWAYS"/>
                         </VBox>
 
-                        <VBox spacing="8">
+                        <VBox spacing="6">
                             <Label text="Location" styleClass="section-title"/>
-                            <TextField fx:id="hotelAddressField" promptText="City or Address"/>
+                            <TextField fx:id="hotelAddressField" promptText="City or Address" HBox.hgrow="ALWAYS"/>
                         </VBox>
 
-                        <VBox spacing="8">
+                        <VBox spacing="6">
                             <Label text="Rating" styleClass="section-title"/>
-                            <ComboBox fx:id="ratingCombo" promptText="Select rating"
-                                      style="-fx-pref-width: 100%;"/>
+                            <ComboBox fx:id="ratingCombo" promptText="Select rating" HBox.hgrow="ALWAYS"/>
                         </VBox>
 
-                        <Button text="Create Hotel" onAction="#onCreateHotel"
-                                styleClass="action-btn" style="-fx-pref-width: 100%;"/>
+                        <Button text="Create Hotel" onAction="#onCreateHotel" styleClass="action-btn"
+                                HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="40"/>
                     </VBox>
 
                     <!-- Salary Management Card -->
-                    <VBox spacing="12" styleClass="card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <VBox spacing="12" styleClass="card" GridPane.columnIndex="1" GridPane.rowIndex="0" HBox.hgrow="ALWAYS">
                         <Label text="💰 Salary Management" styleClass="header-small"/>
 
-                        <VBox spacing="8" VBox.vgrow="ALWAYS">
+                        <VBox spacing="6" VBox.vgrow="ALWAYS">
                             <Label text="Hotel Admin ID" styleClass="section-title"/>
-                            <TextField fx:id="hotelAdminIDField"
-                                       promptText="Enter Hotel Admin ID"/>
+                            <TextField fx:id="hotelAdminIDField" promptText="Enter Hotel Admin ID" HBox.hgrow="ALWAYS"/>
 
                             <Label text="Payment Amount: $50"
                                    style="-fx-font-size: 13px; -fx-text-fill: #64748b; -fx-padding: 8 0;"/>
 
-                            <Button text="Process Salary Payment" onAction="#onGiveSalary"
-                                    styleClass="success-btn" style="-fx-pref-width: 100%;"/>
+                            <Button text="Process Salary Payment" onAction="#onGiveSalary" styleClass="success-btn"
+                                    HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="40"/>
                         </VBox>
 
                         <!-- Info Box -->
@@ -96,18 +96,16 @@
                     </VBox>
 
                     <!-- Danger Zone -->
-                    <VBox spacing="12" styleClass="card" GridPane.columnIndex="0" GridPane.rowIndex="1"
-                          GridPane.columnSpan="2"
-                          style="-fx-border-color: #ef4444; -fx-border-width: 2; -fx-border-radius: 12;">
+                    <VBox spacing="12" styleClass="card" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="2"
+                          style="-fx-border-color: #ef4444; -fx-border-width: 2; -fx-border-radius: 12;" HBox.hgrow="ALWAYS">
                         <Label text="⚠️ Danger Zone"
                                style="-fx-font-size: 16px; -fx-font-weight: 600; -fx-text-fill: #ef4444;"/>
 
                         <Label text="Warning: Resigning will permanently remove the admin account. This action requires multiple confirmations."
                                style="-fx-text-fill: #64748b; -fx-wrap-text: true; -fx-font-size: 12px;"/>
 
-                        <Button text="🛑 RESIGN &amp; DELETE ACCOUNT" onAction="#onResign"
-                                styleClass="danger-btn"
-                                style="-fx-pref-width: 100%; -fx-pref-height: 44; -fx-font-size: 14px;"/>
+                        <Button text="🛑 RESIGN &amp; DELETE ACCOUNT" onAction="#onResign" styleClass="danger-btn"
+                                HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="44" style="-fx-font-size: 14px;"/>
                     </VBox>
                 </GridPane>
 

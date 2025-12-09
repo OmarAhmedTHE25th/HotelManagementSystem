@@ -20,6 +20,7 @@ public class AdminController {
     @FXML
     private void onCreateHotel() {
         try {
+            if (hotelNameField.getText()==null|| ratingCombo.getValue()==null|| hotelAddressField.getText()==null)throw new IllegalArgumentException("Sorry, Ghost Hotels arent on the menu.");
             admin.createHotel(hotelNameField.getText(), ratingCombo.getValue(), hotelAddressField.getText());
             HotelApplication.showAlert("Success", "Hotel Created");
             updateHotelList();

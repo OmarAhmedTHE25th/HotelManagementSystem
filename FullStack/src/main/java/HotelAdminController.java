@@ -100,6 +100,7 @@ public class HotelAdminController {
             newRoomNumberField.clear();
             newRoomPriceField.clear();
             newRoomTypeBox.setValue(null);
+            roomsTable.refresh();
         } catch (NumberFormatException e) {
             HotelApplication.showError("Please enter valid numbers for room number and price");
         } catch (Exception e) {
@@ -121,6 +122,7 @@ public class HotelAdminController {
             // Clear fields
             priceRoomNumberField.clear();
             newPriceField.clear();
+            roomsTable.refresh();
         } catch (NumberFormatException e) {
             HotelApplication.showError("Please enter valid numbers");
         } catch (Exception e) {

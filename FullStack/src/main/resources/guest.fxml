@@ -8,7 +8,7 @@
 
     <!-- Top Navigation Bar -->
     <top>
-        <VBox spacing="0">
+        <VBox>
             <HBox spacing="16" alignment="CENTER_LEFT" styleClass="toolbar">
                 <padding><Insets top="12" right="20" bottom="12" left="20"/></padding>
 
@@ -46,98 +46,80 @@
 
     <!-- Main Content Area -->
     <center>
-        <SplitPane dividerPositions="0.35" style="-fx-background-color: transparent;">
+        <SplitPane dividerPositions="0.3">
 
-            <!-- Left Panel: Hotel Search & List -->
-            <VBox spacing="16" style="-fx-padding: 20;">
+            <VBox spacing="10">
+                <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
 
-                <!-- Search Card -->
-                <VBox spacing="12" styleClass="card-secondary">
-                    <Label text="🔍 Find Your Perfect Stay" styleClass="header-small"/>
+                <VBox spacing="5" style="-fx-padding: 10; -fx-border-color: #ccc; -fx-border-radius: 5; -fx-background-color: white;">
+                    <Label text="Find Your Perfect Stay" styleClass="header-small"/>
 
-                    <VBox spacing="8">
-                        <Label text="Location or Hotel" styleClass="section-title"/>
-                        <TextField fx:id="searchField" promptText="City or Hotel Name"
-                                   style="-fx-pref-width: 100%;"/>
-                    </VBox>
-
-                    <VBox spacing="8">
-                        <Label text="Minimum Rating" styleClass="section-title"/>
-                        <ComboBox fx:id="ratingFilterCombo" promptText="Any Rating"
-                                  style="-fx-pref-width: 100%;"/>
-                    </VBox>
-
-                    <Button text="Search Hotels" onAction="#onSearch"
-                            styleClass="action-btn" style="-fx-pref-width: 100%;"/>
-                </VBox>
-
-                <!-- Hotels List -->
-                <VBox spacing="8" VBox.vgrow="ALWAYS" styleClass="card-secondary">
-                    <Label text="Available Hotels" styleClass="header-small"/>
-                    <ListView fx:id="hotelList" VBox.vgrow="ALWAYS"/>
-                </VBox>
-            </VBox>
-
-            <!-- Right Panel: Rooms & Booking -->
-            <VBox spacing="16" style="-fx-padding: 20;">
-
-                <!-- Rooms Table -->
-                <VBox spacing="12" VBox.vgrow="ALWAYS" styleClass="card-secondary">
-                    <Label text="🛏️ Available Rooms" styleClass="header-small"/>
-
-                    <TableView fx:id="roomTable" VBox.vgrow="ALWAYS">
-                        <columns>
-                            <TableColumn fx:id="numberCol" text="Room #" prefWidth="80"/>
-                            <TableColumn fx:id="typeCol" text="Type" prefWidth="120"/>
-                            <TableColumn fx:id="priceCol" text="Price/Night" prefWidth="100"/>
-                        </columns>
-                    </TableView>
-
-                    <!-- Booking Controls -->
-                    <HBox spacing="12" alignment="CENTER_LEFT"
-                          style="-fx-padding: 12; -fx-background-color: rgba(102,126,234,0.05); -fx-background-radius: 8;">
-                        <VBox spacing="4" HBox.hgrow="ALWAYS">
-                            <Label text="Checkout Date" style="-fx-font-weight: 600; -fx-font-size: 12px;"/>
-                            <DatePicker fx:id="checkoutDate" promptText="Select date"
-                                        style="-fx-pref-width: 100%;"/>
-                        </VBox>
-                        <VBox alignment="BOTTOM_CENTER">
-                            <Button text="🎉 Reserve Room" onAction="#onReserve"
-                                    styleClass="action-btn"
-                                    style="-fx-pref-height: 40; -fx-font-size: 14px;"/>
-                        </VBox>
+                    <Label text="Location or Hotel" style="-fx-font-size: 11px;"/>
+                    <HBox spacing="5" alignment="CENTER_LEFT">
+                        <TextField fx:id="searchField" promptText="City or Hotel Name" HBox.hgrow="ALWAYS"/>
+                        <Button text="Search" onAction="#onSearch" styleClass="action-btn" minWidth="-Infinity"/>
                     </HBox>
+
+                    <Label text="Minimum Rating" style="-fx-font-size: 11px;" minWidth="-Infinity"/>
+                    <ComboBox fx:id="ratingFilterCombo" promptText="..." maxWidth="100" minWidth="-Infinity"/>
                 </VBox>
+
+                <Label text="Available Hotels" styleClass="header-small"/>
+
+                <ListView fx:id="hotelList" VBox.vgrow="ALWAYS"/>
             </VBox>
+
+            <VBox spacing="10">
+                <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+                <Label text="Available Rooms" styleClass="header-small"/>
+
+                <TableView fx:id="roomTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="numberCol" text="Room #"/>
+                        <TableColumn fx:id="typeCol" text="Type"/>
+                        <TableColumn fx:id="priceCol" text="Price per night ($)"/>
+                    </columns>
+                </TableView>
+
+                <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10; -fx-background-color: white; -fx-background-radius: 5;">
+                    <Label text="Checkout Date:"/>
+                    <DatePicker fx:id="checkoutDate" promptText="Select Date"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Button text="Reserve Selected" onAction="#onReserve" styleClass="action-btn" style="-fx-font-size: 14px;"/>
+                </HBox>
+            </VBox>
+
         </SplitPane>
     </center>
 
     <!-- Bottom Panel: My Reservations -->
     <bottom>
-        <VBox spacing="12" styleClass="footer" style="-fx-padding: 20;">
-            <HBox alignment="CENTER_LEFT" spacing="12">
-                <Label text="📋 My Reservations" styleClass="header-small"/>
-                <Region HBox.hgrow="ALWAYS"/>
-                <Label text="View all your active bookings below" styleClass="text-muted"
-                       style="-fx-font-size: 12px;"/>
-            </HBox>
+        <TitledPane text="📋 My Reservations (Click to Open)" expanded="false">
 
-            <!-- Reservations Table -->
-            <TableView fx:id="reservationsTable" prefHeight="200" maxHeight="250">
-                <columns>
-                    <TableColumn fx:id="resHotelCol" text="Hotel" prefWidth="180"/>
-                    <TableColumn fx:id="resRoomCol" text="Room" prefWidth="80"/>
-                    <TableColumn fx:id="resPriceCol" text="Total Price" prefWidth="100"/>
-                    <TableColumn fx:id="resCheckoutCol" text="Checkout Date" prefWidth="120"/>
-                </columns>
-            </TableView>
+            <VBox spacing="10" styleClass="footer" style="-fx-padding: 10;">
 
-            <!-- Summary Text Area -->
-            <VBox spacing="8" style="-fx-background-color: rgba(102,126,234,0.05); -fx-padding: 12; -fx-background-radius: 8;">
-                <Label text="Reservation Summary" style="-fx-font-weight: 600; -fx-font-size: 13px;"/>
-                <TextArea fx:id="myReservationsArea" prefRowCount="3" editable="false"
-                          style="-fx-background-color: transparent; -fx-border-width: 0;"/>
+                <HBox alignment="CENTER_LEFT" spacing="12">
+                    <Label text="Active Bookings" styleClass="header-small"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label text="Details" styleClass="text-muted" style="-fx-font-size: 10px;"/>
+                </HBox>
+
+                <TableView fx:id="reservationsTable" prefHeight="120" maxHeight="150">
+                    <columns>
+                        <TableColumn fx:id="resHotelCol" text="Hotel" prefWidth="150"/>
+                        <TableColumn fx:id="resRoomCol" text="Room"/>
+                        <TableColumn fx:id="resPriceCol" text="Price"/>
+                        <TableColumn fx:id="resCheckoutCol" text="Checkout" prefWidth="100"/>
+                    </columns>
+                </TableView>
+
+                <VBox spacing="5" style="-fx-background-color: rgba(102,126,234,0.05); -fx-padding: 8; -fx-background-radius: 8;">
+                    <TextArea fx:id="myReservationsArea" prefRowCount="1" editable="false"
+                              style="-fx-background-color: transparent; -fx-border-width: 0; -fx-font-size: 10px;"/>
+                </VBox>
+
             </VBox>
-        </VBox>
+        </TitledPane>
     </bottom>
 </BorderPane>

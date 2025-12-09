@@ -62,30 +62,28 @@
                     <VBox spacing="12" styleClass="card" HBox.hgrow="ALWAYS">
                         <Label text="➕ Add New Room" styleClass="header-small"/>
 
-                        <VBox spacing="8">
+                        <VBox spacing="6">
                             <Label text="Room Number" styleClass="section-title"/>
-                            <TextField fx:id="newRoomNumberField"
-                                       promptText="e.g., 101"/>
+                            <TextField fx:id="newRoomNumberField" promptText="e.g., 101"
+                                       HBox.hgrow="ALWAYS"/>
                         </VBox>
 
-                        <VBox spacing="8">
+                        <VBox spacing="6">
                             <Label text="Price per Night" styleClass="section-title"/>
-                            <TextField fx:id="newRoomPriceField"
-                                       promptText="e.g., 150.00"/>
+                            <TextField fx:id="newRoomPriceField" promptText="e.g., 150.00"
+                                       HBox.hgrow="ALWAYS"/>
                         </VBox>
 
-                        <VBox spacing="8">
+                        <VBox spacing="6">
                             <Label text="Room Type" styleClass="section-title"/>
-                            <ComboBox fx:id="newRoomTypeBox"
-                                      promptText="Select type"
-                                      style="-fx-pref-width: 100%;"/>
+                            <ComboBox fx:id="newRoomTypeBox" promptText="Select type"
+                                      HBox.hgrow="ALWAYS"/>
                         </VBox>
 
                         <Button text="Add Room" onAction="#onAddRoom"
-                                styleClass="action-btn"
-                                style="-fx-pref-width: 100%; -fx-pref-height: 40;"/>
+                                styleClass="action-btn" HBox.hgrow="ALWAYS"
+                                maxWidth="Infinity" prefHeight="40"/>
 
-                        <!-- Info Box -->
                         <VBox spacing="4" style="-fx-background-color: rgba(102,126,234,0.1); -fx-padding: 10; -fx-background-radius: 8;">
                             <Label text="ℹ️ Tip" style="-fx-font-weight: 600; -fx-font-size: 11px;"/>
                             <Label text="Maximum 100 rooms per hotel"
@@ -93,36 +91,37 @@
                         </VBox>
                     </VBox>
 
+
                     <!-- Update Price Card -->
                     <VBox spacing="12" styleClass="card" HBox.hgrow="ALWAYS">
                         <Label text="💲 Update Room Price" styleClass="header-small"/>
 
-                        <VBox spacing="8">
+                        <VBox spacing="6">
                             <Label text="Room Number" styleClass="section-title"/>
-                            <TextField fx:id="priceRoomNumberField"
-                                       promptText="Enter room number"/>
+                            <TextField fx:id="priceRoomNumberField" promptText="Enter room number"
+                                       HBox.hgrow="ALWAYS"/>
                         </VBox>
 
-                        <VBox spacing="8">
+                        <VBox spacing="6">
                             <Label text="New Price" styleClass="section-title"/>
-                            <TextField fx:id="newPriceField"
-                                       promptText="Enter new price"/>
+                            <TextField fx:id="newPriceField" promptText="Enter new price"
+                                       HBox.hgrow="ALWAYS"/>
                         </VBox>
 
                         <!-- Spacer for alignment -->
                         <Region VBox.vgrow="ALWAYS" style="-fx-min-height: 20;"/>
 
                         <Button text="Update Price" onAction="#onChangePrice"
-                                styleClass="success-btn"
-                                style="-fx-pref-width: 100%; -fx-pref-height: 40;"/>
+                                styleClass="success-btn" HBox.hgrow="ALWAYS"
+                                maxWidth="Infinity" prefHeight="40"/>
 
-                        <!-- Info Box -->
                         <VBox spacing="4" style="-fx-background-color: rgba(16,185,129,0.1); -fx-padding: 10; -fx-background-radius: 8;">
                             <Label text="💡 Note" style="-fx-font-weight: 600; -fx-font-size: 11px;"/>
                             <Label text="Price changes affect future bookings only"
                                    style="-fx-font-size: 10px; -fx-text-fill: #64748b; -fx-wrap-text: true;"/>
                         </VBox>
                     </VBox>
+
                 </HBox>
 
                 <!-- Quick Stats -->

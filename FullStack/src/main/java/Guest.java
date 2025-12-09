@@ -145,6 +145,13 @@ public String viewReservations()
     return info.toString();
 }
 
+public void Search(String hotelname)
+{
+    if (hotelname==null)throw new IllegalArgumentException("Sorry we dont support mind reading!");
+for (Hotel hotel: Database.getInstance().hotels)
+    if (hotel.getHotelName().equals(hotelname))return;
+throw new IllegalArgumentException("Whose that?");
+}
     @Override
     public String toString() {
         return

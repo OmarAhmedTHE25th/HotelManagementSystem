@@ -35,7 +35,7 @@ public class LoginController {
             });
         }
 
-        // Optionally hide hotel name field on startup:
+
         if (regHotelName != null) {
             regHotelName.setDisable(true);
             regHotelName.setVisible(false);

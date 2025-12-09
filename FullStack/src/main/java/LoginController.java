@@ -60,14 +60,31 @@ public class LoginController {
         String id = idField.getText();
         String role = roleCombo.getValue();
 
+        // FIX 1: Prevent crash if no role is selected
+        if (role == null) {
+            HotelApplication.showError("Please select a role (Guest, Admin, etc)");
+            return;
+        }
+
         try {
             switch (role) {
                 case "Guest" -> {
+                    // Check credentials
                     if (new Guest().logIn(user, pass, id)) {
+                        // Attempt to find the user object
                         for (Guest g : Database.getInstance().guests) {
-                            if (g.ID.equals(id)) Session.currentUser = g;
+                            if (g.ID.equals(id)) {
+                                Session.currentUser = g;
+                                break;
+                            }
                         }
-                        HotelApplication.setRoot("guest");
+
+                        // FIX 2: Only change screen if we ACTUALLY found the user
+                        if (Session.currentUser != null) {
+                            HotelApplication.setRoot("guest");
+                        } else {
+                            HotelApplication.showError("Login successful, but User ID not found in database.");
+                        }
                     } else {
                         HotelApplication.showError("Invalid Credentials");
                     }
@@ -84,16 +101,26 @@ public class LoginController {
                 case "Hotel Admin" -> {
                     if (new HotelAdmin().logIn(user, pass, id)) {
                         for (HotelAdmin ha : Database.getInstance().hotelAdmins) {
-                            if (ha.ID.equals(id)) Session.currentUser = ha;
+                            if (ha.ID.equals(id)) {
+                                Session.currentUser = ha;
+                                break;
+                            }
                         }
-                        HotelApplication.setRoot("hotel_admin");
+
+                        // FIX 2: Same check here for Hotel Admin
+                        if (Session.currentUser != null) {
+                            HotelApplication.setRoot("hotel_admin");
+                        } else {
+                            HotelApplication.showError("Login successful, but User ID not found.");
+                        }
                     } else {
                         HotelApplication.showError("Invalid Hotel Admin Credentials");
                     }
                 }
             }
         } catch (Exception e) {
-            HotelApplication.showError(e.getMessage());
+             // Print the real error to console
+            HotelApplication.showError("Error: " + e.getMessage());
         }
     }
 

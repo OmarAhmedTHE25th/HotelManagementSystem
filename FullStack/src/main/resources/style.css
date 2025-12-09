@@ -430,3 +430,37 @@
 .compact-mode .button {
     -fx-padding: 8 16;
 }
+/* --- Fix for Alternating Row Colors --- */
+
+/* Force all TableView rows to be white */
+.table-row-cell:odd,
+.table-row-cell:even {
+    -fx-background-color: white;
+}
+
+/* Force all ListView cells to be white */
+.list-cell:odd,
+.list-cell:even {
+    -fx-background-color: white;
+}
+
+/* Ensure the SELECTED row is still Blue (so you can see it) */
+.table-row-cell:filled:selected,
+.table-row-cell:filled:selected:focused,
+.list-cell:filled:selected,
+.list-cell:filled:selected:focused {
+    -fx-background-color: #3498db;  /* Matches your .action-btn color */
+    -fx-text-fill: white;
+}
+/* --- Fix for Hovering over Dropdown/List Items --- */
+
+.list-cell:filled:hover {
+    -fx-background-color: #e6e6e6; /* Light gray background to show you are hovering */
+    -fx-text-fill: black;          /* Force text to stay black */
+}
+
+/* Optional: Ensure the selected item stays Blue even if you hover over it */
+.list-cell:filled:selected:hover {
+    -fx-background-color: #2980b9; /* A slightly darker blue */
+    -fx-text-fill: white;
+}

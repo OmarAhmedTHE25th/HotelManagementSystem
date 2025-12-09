@@ -11,6 +11,10 @@ public class HotelAdminController {
 
     @FXML private Label hotelNameLabel;
     @FXML private Label hotelLocationLabel;
+    @FXML private Label roomCountLabel;
+    @FXML private Label totalRoomsLabel;
+    @FXML private Label availableRoomsLabel;
+    @FXML private Label occupiedRoomsLabel;
 
     @FXML private TableView<Room> roomsTable;
     @FXML private TableColumn<Room, Number> roomNumberCol;
@@ -29,21 +33,50 @@ public class HotelAdminController {
     @FXML
     public void initialize() {
         admin = (HotelAdmin) Session.currentUser;
-
         Hotel hotel = admin.getHotel();
 
+        // Set hotel info
         hotelNameLabel.setText(hotel.getHotelName());
-        hotelLocationLabel.setText("(" + hotel.getLocation() + ")");
+        hotelLocationLabel.setText(hotel.getLocation());
 
-        // Fill table
+        // Setup table columns
         roomNumberCol.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().roomNumber));
         priceCol.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().price));
         typeCol.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().roomType.name()));
 
-        roomsTable.setItems(FXCollections.observableArrayList(hotel.getRooms()));
+        // Load rooms
+        refreshRoomList();
 
-        // Room type dropdown:
+        // Fill room type dropdown
         newRoomTypeBox.getItems().addAll(Types.values());
+
+        // Update stats
+        updateStats();
+    }
+
+    private void refreshRoomList() {
+        roomsTable.setItems(FXCollections.observableArrayList(admin.getHotel().getRooms()));
+        updateStats();
+    }
+
+    private void updateStats() {
+        Hotel hotel = admin.getHotel();
+        int total = hotel.getRooms().size();
+        long available = hotel.getRooms().stream().filter(r -> r.available).count();
+        long occupied = total - available;
+
+        if (roomCountLabel != null) {
+            roomCountLabel.setText(total + " rooms");
+        }
+        if (totalRoomsLabel != null) {
+            totalRoomsLabel.setText(String.valueOf(total));
+        }
+        if (availableRoomsLabel != null) {
+            availableRoomsLabel.setText(String.valueOf(available));
+        }
+        if (occupiedRoomsLabel != null) {
+            occupiedRoomsLabel.setText(String.valueOf(occupied));
+        }
     }
 
     @FXML
@@ -53,10 +86,22 @@ public class HotelAdminController {
             double price = Double.parseDouble(newRoomPriceField.getText());
             Types type = newRoomTypeBox.getValue();
 
-            admin.createRoom(num, price, type);
+            if (type == null) {
+                HotelApplication.showError("Please select a room type");
+                return;
+            }
 
-            roomsTable.getItems().setAll(admin.getHotel().getRooms());
-            HotelApplication.showAlert("Success", "Room Added!");
+            admin.createRoom(num, price, type);
+            refreshRoomList();
+
+            HotelApplication.showAlert("Success", "Room #" + num + " added successfully!");
+
+            // Clear fields
+            newRoomNumberField.clear();
+            newRoomPriceField.clear();
+            newRoomTypeBox.setValue(null);
+        } catch (NumberFormatException e) {
+            HotelApplication.showError("Please enter valid numbers for room number and price");
         } catch (Exception e) {
             HotelApplication.showError(e.getMessage());
         }
@@ -69,9 +114,15 @@ public class HotelAdminController {
             int newP = Integer.parseInt(newPriceField.getText());
 
             admin.changeRoomPrice(num, newP);
+            refreshRoomList();
 
-            roomsTable.getItems().setAll(admin.getHotel().getRooms());
-            HotelApplication.showAlert("Success", "Price Updated!");
+            HotelApplication.showAlert("Success", "Room #" + num + " price updated to $" + newP);
+
+            // Clear fields
+            priceRoomNumberField.clear();
+            newPriceField.clear();
+        } catch (NumberFormatException e) {
+            HotelApplication.showError("Please enter valid numbers");
         } catch (Exception e) {
             HotelApplication.showError(e.getMessage());
         }

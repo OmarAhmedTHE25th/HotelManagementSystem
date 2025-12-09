@@ -1,56 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="HotelAdminController" styleClass="root-pane">
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="HotelAdminController">
-
-    <!-- TOP BAR -->
+    <!-- Top Bar -->
     <top>
-        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-padding: 15; -fx-background-color: #f4f4f4;">
-            <Label fx:id="hotelNameLabel" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-            <Label fx:id="hotelLocationLabel" style="-fx-font-size: 14px; -fx-text-fill: gray;"/>
-            <Button text="Logout" onAction="#onLogout" style="-fx-padding: 5 15;"/>
+        <HBox spacing="16" alignment="CENTER_LEFT" styleClass="toolbar">
+            <padding><Insets top="12" right="20" bottom="12" left="20"/></padding>
+
+            <VBox spacing="2">
+                <Label text="🏨 Hotel Manager Dashboard"
+                       style="-fx-font-size: 16px; -fx-font-weight: 700;"/>
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label fx:id="hotelNameLabel"
+                           style="-fx-font-size: 14px; -fx-font-weight: 600;"/>
+                    <Label text="•" style="-fx-font-size: 12px; -fx-opacity: 0.6;"/>
+                    <Label fx:id="hotelLocationLabel"
+                           style="-fx-font-size: 13px; -fx-opacity: 0.8;"/>
+                </HBox>
+            </VBox>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <Button text="🚪 Logout" onAction="#onLogout" styleClass="danger-btn"/>
         </HBox>
     </top>
 
-    <!-- MAIN CENTER PANEL -->
+    <!-- Main Content -->
     <center>
-        <VBox spacing="20" alignment="TOP_CENTER" style="-fx-padding: 20;">
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <VBox spacing="20" style="-fx-padding: 24;">
 
-            <!-- TABLE OF ROOMS -->
-            <TableView fx:id="roomsTable" prefHeight="300" maxWidth="600">
-                <columns>
+                <!-- Rooms Overview -->
+                <VBox spacing="12" styleClass="card">
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label text="🛏️ Room Inventory" styleClass="header-small"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="roomCountLabel" text="0 rooms"
+                               style="-fx-text-fill: #64748b; -fx-font-size: 13px;"/>
+                    </HBox>
 
-                    <TableColumn fx:id="roomNumberCol" text="Room #" prefWidth="100"/>
-                    <TableColumn fx:id="priceCol" text="Price" prefWidth="100"/>
-                    <TableColumn fx:id="typeCol" text="Type" prefWidth="120"/>
+                    <Separator/>
 
-                </columns>
-            </TableView>
-
-            <!-- ADD NEW ROOM FORM -->
-            <TitledPane text="Add Room" expanded="false" maxWidth="600">
-                <VBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10;">
-                    <TextField fx:id="newRoomNumberField" promptText="Room Number"/>
-                    <TextField fx:id="newRoomPriceField" promptText="Price"/>
-                    <ComboBox fx:id="newRoomTypeBox" promptText="Type"/>
-                    <Button text="Add Room" onAction="#onAddRoom" maxWidth="Infinity"/>
+                    <!-- Rooms Table -->
+                    <TableView fx:id="roomsTable" prefHeight="350">
+                        <columns>
+                            <TableColumn fx:id="roomNumberCol" text="Room #" prefWidth="100"/>
+                            <TableColumn fx:id="priceCol" text="Price/Night ($)" prefWidth="120"/>
+                            <TableColumn fx:id="typeCol" text="Room Type" prefWidth="150"/>
+                        </columns>
+                    </TableView>
                 </VBox>
-            </TitledPane>
 
-            <!-- CHANGE PRICE FORM -->
-            <TitledPane text="Change Room Price" expanded="false" maxWidth="600">
-                <VBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10;">
-                    <TextField fx:id="priceRoomNumberField" promptText="Room Number"/>
-                    <TextField fx:id="newPriceField" promptText="New Price"/>
-                    <Button text="Change Price" onAction="#onChangePrice" maxWidth="Infinity"/>
-                </VBox>
-            </TitledPane>
+                <!-- Management Actions -->
+                <HBox spacing="16">
 
-        </VBox>
+                    <!-- Add Room Card -->
+                    <VBox spacing="12" styleClass="card" HBox.hgrow="ALWAYS">
+                        <Label text="➕ Add New Room" styleClass="header-small"/>
+
+                        <VBox spacing="8">
+                            <Label text="Room Number" styleClass="section-title"/>
+                            <TextField fx:id="newRoomNumberField"
+                                       promptText="e.g., 101"/>
+                        </VBox>
+
+                        <VBox spacing="8">
+                            <Label text="Price per Night" styleClass="section-title"/>
+                            <TextField fx:id="newRoomPriceField"
+                                       promptText="e.g., 150.00"/>
+                        </VBox>
+
+                        <VBox spacing="8">
+                            <Label text="Room Type" styleClass="section-title"/>
+                            <ComboBox fx:id="newRoomTypeBox"
+                                      promptText="Select type"
+                                      style="-fx-pref-width: 100%;"/>
+                        </VBox>
+
+                        <Button text="Add Room" onAction="#onAddRoom"
+                                styleClass="action-btn"
+                                style="-fx-pref-width: 100%; -fx-pref-height: 40;"/>
+
+                        <!-- Info Box -->
+                        <VBox spacing="4" style="-fx-background-color: rgba(102,126,234,0.1); -fx-padding: 10; -fx-background-radius: 8;">
+                            <Label text="ℹ️ Tip" style="-fx-font-weight: 600; -fx-font-size: 11px;"/>
+                            <Label text="Maximum 100 rooms per hotel"
+                                   style="-fx-font-size: 10px; -fx-text-fill: #64748b; -fx-wrap-text: true;"/>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Update Price Card -->
+                    <VBox spacing="12" styleClass="card" HBox.hgrow="ALWAYS">
+                        <Label text="💲 Update Room Price" styleClass="header-small"/>
+
+                        <VBox spacing="8">
+                            <Label text="Room Number" styleClass="section-title"/>
+                            <TextField fx:id="priceRoomNumberField"
+                                       promptText="Enter room number"/>
+                        </VBox>
+
+                        <VBox spacing="8">
+                            <Label text="New Price" styleClass="section-title"/>
+                            <TextField fx:id="newPriceField"
+                                       promptText="Enter new price"/>
+                        </VBox>
+
+                        <!-- Spacer for alignment -->
+                        <Region VBox.vgrow="ALWAYS" style="-fx-min-height: 20;"/>
+
+                        <Button text="Update Price" onAction="#onChangePrice"
+                                styleClass="success-btn"
+                                style="-fx-pref-width: 100%; -fx-pref-height: 40;"/>
+
+                        <!-- Info Box -->
+                        <VBox spacing="4" style="-fx-background-color: rgba(16,185,129,0.1); -fx-padding: 10; -fx-background-radius: 8;">
+                            <Label text="💡 Note" style="-fx-font-weight: 600; -fx-font-size: 11px;"/>
+                            <Label text="Price changes affect future bookings only"
+                                   style="-fx-font-size: 10px; -fx-text-fill: #64748b; -fx-wrap-text: true;"/>
+                        </VBox>
+                    </VBox>
+                </HBox>
+
+                <!-- Quick Stats -->
+                <HBox spacing="16">
+                    <VBox spacing="8" styleClass="stats-card" HBox.hgrow="ALWAYS">
+                        <Label text="Total Rooms" style="-fx-font-size: 12px; -fx-opacity: 0.9;"/>
+                        <Label fx:id="totalRoomsLabel" text="0"
+                               style="-fx-font-size: 28px; -fx-font-weight: 700;"/>
+                    </VBox>
+
+                    <VBox spacing="8" styleClass="stats-card" HBox.hgrow="ALWAYS">
+                        <Label text="Available Rooms" style="-fx-font-size: 12px; -fx-opacity: 0.9;"/>
+                        <Label fx:id="availableRoomsLabel" text="0"
+                               style="-fx-font-size: 28px; -fx-font-weight: 700;"/>
+                    </VBox>
+
+                    <VBox spacing="8" styleClass="stats-card" HBox.hgrow="ALWAYS">
+                        <Label text="Occupied Rooms" style="-fx-font-size: 12px; -fx-opacity: 0.9;"/>
+                        <Label fx:id="occupiedRoomsLabel" text="0"
+                               style="-fx-font-size: 28px; -fx-font-weight: 700;"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </ScrollPane>
     </center>
-
 </BorderPane>

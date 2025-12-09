@@ -3,55 +3,129 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="AdminController" styleClass="root-pane">
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="AdminController" styleClass="root-pane">
+
+    <!-- Top Bar -->
     <top>
         <HBox spacing="20" alignment="CENTER_LEFT" styleClass="toolbar">
-            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
-            <Label text="Admin Dashboard" styleClass="header-small"/>
+            <padding><Insets top="12" right="20" bottom="12" left="20"/></padding>
+
+            <Label text="👑 System Administrator"
+                   style="-fx-font-size: 18px; -fx-font-weight: 700;"/>
+
             <Region HBox.hgrow="ALWAYS"/>
-            <Button text="Logout" onAction="#onLogout"/>
+
+            <Button text="🚪 Logout" onAction="#onLogout" styleClass="danger-btn"/>
         </HBox>
     </top>
+
+    <!-- Main Content -->
     <center>
-        <VBox spacing="20">
-            <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <VBox spacing="20" style="-fx-padding: 24;">
 
-            <HBox spacing="20">
-                <VBox spacing="10" styleClass="card" HBox.hgrow="ALWAYS">
-                    <Label text="Create New Hotel" styleClass="header-small"/>
-                    <TextField fx:id="hotelNameField" promptText="Hotel Name"/>
-                    <TextField fx:id="hotelAddressField" promptText="Address"/>
-                    <ComboBox fx:id="ratingCombo" promptText="Rating" maxWidth="Infinity"/>
-                    <Button text="Create Hotel" onAction="#onCreateHotel" styleClass="action-btn"/>
+                <!-- Quick Stats Row -->
+                <HBox spacing="16">
+                    <!-- Revenue Card -->
+                    <VBox spacing="8" styleClass="stats-card" HBox.hgrow="ALWAYS">
+                        <Label text="Total Revenue" style="-fx-font-size: 13px; -fx-opacity: 0.9;"/>
+                        <Label text="Click to Update ↓" style="-fx-font-size: 20px; -fx-font-weight: 700;"/>
+                        <Button text="Calculate Revenue" onAction="#onViewRevenue"
+                                style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-weight: 600; -fx-pref-width: 100%;"/>
+                    </VBox>
+
+                    <!-- Actions Card -->
+                    <VBox spacing="8" styleClass="stats-card" HBox.hgrow="ALWAYS">
+                        <Label text="System Actions" style="-fx-font-size: 13px; -fx-opacity: 0.9;"/>
+                        <Label text="Manage System" style="-fx-font-size: 20px; -fx-font-weight: 700;"/>
+                        <Button text="Flag Overdue Guests" onAction="#onFlagOverdue"
+                                style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-weight: 600; -fx-pref-width: 100%;"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Main Actions Grid -->
+                <GridPane hgap="16" vgap="16">
+
+                    <!-- Create Hotel Card -->
+                    <VBox spacing="12" styleClass="card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Label text="🏨 Create New Hotel" styleClass="header-small"/>
+
+                        <VBox spacing="8">
+                            <Label text="Hotel Name" styleClass="section-title"/>
+                            <TextField fx:id="hotelNameField" promptText="Enter hotel name"/>
+                        </VBox>
+
+                        <VBox spacing="8">
+                            <Label text="Location" styleClass="section-title"/>
+                            <TextField fx:id="hotelAddressField" promptText="City or Address"/>
+                        </VBox>
+
+                        <VBox spacing="8">
+                            <Label text="Rating" styleClass="section-title"/>
+                            <ComboBox fx:id="ratingCombo" promptText="Select rating"
+                                      style="-fx-pref-width: 100%;"/>
+                        </VBox>
+
+                        <Button text="Create Hotel" onAction="#onCreateHotel"
+                                styleClass="action-btn" style="-fx-pref-width: 100%;"/>
+                    </VBox>
+
+                    <!-- Salary Management Card -->
+                    <VBox spacing="12" styleClass="card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <Label text="💰 Salary Management" styleClass="header-small"/>
+
+                        <VBox spacing="8" VBox.vgrow="ALWAYS">
+                            <Label text="Hotel Admin ID" styleClass="section-title"/>
+                            <TextField fx:id="hotelAdminIDField"
+                                       promptText="Enter Hotel Admin ID"/>
+
+                            <Label text="Payment Amount: $50"
+                                   style="-fx-font-size: 13px; -fx-text-fill: #64748b; -fx-padding: 8 0;"/>
+
+                            <Button text="Process Salary Payment" onAction="#onGiveSalary"
+                                    styleClass="success-btn" style="-fx-pref-width: 100%;"/>
+                        </VBox>
+
+                        <!-- Info Box -->
+                        <VBox spacing="4" style="-fx-background-color: rgba(102,126,234,0.1); -fx-padding: 12; -fx-background-radius: 8;">
+                            <Label text="ℹ️ Payment Info" style="-fx-font-weight: 600; -fx-font-size: 12px;"/>
+                            <Label text="Standard salary: $50 per payment cycle"
+                                   style="-fx-font-size: 11px; -fx-text-fill: #64748b; -fx-wrap-text: true;"/>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Danger Zone -->
+                    <VBox spacing="12" styleClass="card" GridPane.columnIndex="0" GridPane.rowIndex="1"
+                          GridPane.columnSpan="2"
+                          style="-fx-border-color: #ef4444; -fx-border-width: 2; -fx-border-radius: 12;">
+                        <Label text="⚠️ Danger Zone"
+                               style="-fx-font-size: 16px; -fx-font-weight: 600; -fx-text-fill: #ef4444;"/>
+
+                        <Label text="Warning: Resigning will permanently remove the admin account. This action requires multiple confirmations."
+                               style="-fx-text-fill: #64748b; -fx-wrap-text: true; -fx-font-size: 12px;"/>
+
+                        <Button text="🛑 RESIGN &amp; DELETE ACCOUNT" onAction="#onResign"
+                                styleClass="danger-btn"
+                                style="-fx-pref-width: 100%; -fx-pref-height: 44; -fx-font-size: 14px;"/>
+                    </VBox>
+                </GridPane>
+
+                <!-- Hotels List Section -->
+                <VBox spacing="12" styleClass="card">
+                    <HBox alignment="CENTER_LEFT" spacing="12">
+                        <Label text="🏢 All Hotels in System" styleClass="header-small"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label fx:id="hotelCountLabel" text="0 hotels" styleClass="text-muted"/>
+                    </HBox>
+
+                    <Separator/>
+
+                    <TextArea fx:id="outputArea" VBox.vgrow="ALWAYS"
+                              prefRowCount="12" editable="false"
+                              promptText="Hotel information will appear here..."/>
                 </VBox>
-
-                <VBox spacing="10" styleClass="card" HBox.hgrow="ALWAYS">
-                    <Label text="Actions" styleClass="header-small"/>
-                    <Button text="View Total Revenue" onAction="#onViewRevenue" maxWidth="Infinity"/>
-                    <Button text="Flag Overdue Customers" onAction="#onFlagOverdue" maxWidth="Infinity"/>
-                    <Button text="RESIGN &amp; LOG OUT FOREVER"
-                            onAction="#onResign"
-                            style="-fx-background-color: #e74c3c; -fx-text-fill: white;"
-                            maxWidth="Infinity"/>
-                </VBox>
-
-            </HBox>
-            <HBox spacing="20">
-                <VBox spacing="10" styleClass="card" HBox.hgrow="ALWAYS">
-                </VBox>
-
-                <VBox spacing="10" styleClass="card" HBox.hgrow="ALWAYS">
-                </VBox>
-
-                <VBox spacing="10" styleClass="card" HBox.hgrow="ALWAYS">
-                    <Label text="Reluctant Salary Payment" styleClass="header-small"/>
-                    <TextField fx:id="hotelAdminIDField" promptText="Hotel Admin ID to pay"/>
-                    <Button text="Toss $50 Salary" onAction="#onGiveSalary" styleClass="action-btn" maxWidth="Infinity"/>
-                </VBox>
-            </HBox>
-
-            <Label text="System Output / Hotels List" styleClass="header-small"/>
-            <TextArea fx:id="outputArea" VBox.vgrow="ALWAYS" editable="false"/>
-        </VBox>
+            </VBox>
+        </ScrollPane>
     </center>
 </BorderPane>

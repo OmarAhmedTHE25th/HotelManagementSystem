@@ -1,5 +1,6 @@
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
 
@@ -10,38 +11,43 @@ public class LoginController {
     @FXML private ComboBox<String> roleCombo, regRole;
     @FXML private DatePicker regDob;
     @FXML private TabPane tabPane;
+    @FXML private VBox hotelNameBox;
 
     @FXML
     public void initialize() {
-
+        // Initialize login role combo
         if (roleCombo != null) {
             roleCombo.getItems().addAll("Guest", "Admin", "Hotel Admin");
             roleCombo.setValue("Guest");
         }
 
+        // Initialize registration role combo
         if (regRole != null) {
             regRole.getItems().addAll("Guest", "Admin", "Hotel Admin");
             regRole.setValue("Guest");
 
-
+            // Add listener to show/hide hotel name field
             regRole.valueProperty().addListener((_, _, newVal) -> {
                 if (newVal.equals("Hotel Admin")) {
-                    regHotelName.setDisable(false);
-                    regHotelName.setVisible(true);
+                    if (hotelNameBox != null) {
+                        hotelNameBox.setVisible(true);
+                        hotelNameBox.setManaged(true);
+                    }
+                    if (regHotelName != null) {
+                        regHotelName.setDisable(false);
+                    }
                 } else {
-                    regHotelName.setDisable(true);
-                    regHotelName.setVisible(false);
+                    if (hotelNameBox != null) {
+                        hotelNameBox.setVisible(false);
+                        hotelNameBox.setManaged(false);
+                    }
+                    if (regHotelName != null) {
+                        regHotelName.setDisable(true);
+                    }
                 }
             });
         }
-
-
-        if (regHotelName != null) {
-            regHotelName.setDisable(true);
-            regHotelName.setVisible(false);
-        }
     }
-
 
     @FXML
     private void onLogin() {
@@ -83,8 +89,6 @@ public class LoginController {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println(e.getLocalizedMessage());
             HotelApplication.showError(e.getMessage());
         }
     }
@@ -114,16 +118,14 @@ public class LoginController {
                     }
                 }
                 if (targetHotel == null) throw new IllegalArgumentException("Hotel not found");
-                
+
                 HotelAdmin.signUp(user, pass, dob, id, targetHotel);
             }
 
             HotelApplication.showAlert("Success", "Account Created! Please Login.");
             tabPane.getSelectionModel().select(0);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             HotelApplication.showError(e.getMessage());
-
         }
     }
 }

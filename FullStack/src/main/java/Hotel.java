@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.NotNull;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -21,7 +23,7 @@ Hotel(){}
     }
 
 
-    public Room reserveRoom(int roomNumber,LocalDate checkout)
+    public Room reserveRoom(int roomNumber, @NotNull LocalDate checkout)
     {
         if (checkout.isBefore(LocalDate.now()))
             throw new IllegalArgumentException("Time travel not supported.");

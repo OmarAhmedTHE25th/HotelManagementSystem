@@ -57,7 +57,7 @@
                     <Label text="Location or Hotel" style="-fx-font-size: 11px;"/>
                     <HBox spacing="5" alignment="CENTER_LEFT">
                         <TextField fx:id="searchField" promptText="City or Hotel Name" HBox.hgrow="ALWAYS"/>
-                        <Button text="Search" onAction="#onSearch" styleClass="action-btn" minWidth="-Infinity"/>
+                        <Button text="Search" onAction="#onSearch" styleClass="action-btn" minWidth="-Infinity" defaultButton="true"/>
                     </HBox>
 
                     <Label text="Minimum Rating" style="-fx-font-size: 11px;" minWidth="-Infinity"/>
@@ -66,7 +66,11 @@
 
                 <Label text="Available Hotels" styleClass="header-small"/>
 
-                <ListView fx:id="hotelList" VBox.vgrow="ALWAYS"/>
+                <ListView fx:id="hotelList" VBox.vgrow="ALWAYS">
+                    <placeholder>
+                        <Label text="No hotels found matching your search."/>
+                    </placeholder>
+                </ListView>
             </VBox>
 
             <VBox spacing="10">
@@ -86,7 +90,7 @@
                     <Label text="Checkout Date:"/>
                     <DatePicker fx:id="checkoutDate" promptText="Select Date"/>
                     <Region HBox.hgrow="ALWAYS"/>
-                    <Button text="Reserve Selected" onAction="#onReserve" styleClass="action-btn" style="-fx-font-size: 14px;"/>
+                    <Button text="Reserve Selected" onAction="#onReserve" styleClass="action-btn" style="-fx-font-size: 14px;" />
                 </HBox>
             </VBox>
 
@@ -112,6 +116,9 @@
                         <TableColumn fx:id="resPriceCol" text="Price"/>
                         <TableColumn fx:id="resCheckoutCol" text="Checkout" prefWidth="100"/>
                     </columns>
+                    <placeholder>
+                        <Label text="You have no active reservations."/>
+                    </placeholder>
                 </TableView>
 
                 <VBox spacing="5" style="-fx-background-color: rgba(102,126,234,0.05); -fx-padding: 8; -fx-background-radius: 8;">

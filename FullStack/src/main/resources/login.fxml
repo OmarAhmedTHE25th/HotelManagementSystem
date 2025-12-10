@@ -32,7 +32,7 @@
                             <TextField fx:id="idField" promptText="ID"/>
                             <PasswordField fx:id="passwordField" promptText="Password"/>
 
-                            <Button text="Login" onAction="#onLogin" styleClass="action-btn" maxWidth="Infinity"/>
+                            <Button text="Login" onAction="#onLogin" styleClass="action-btn" maxWidth="Infinity" defaultButton="true"/>
                         </VBox>
                     </ScrollPane>
                 </Tab>
@@ -53,7 +53,7 @@
 
                             <TextField fx:id="regHotelName" promptText="Hotel Name" maxWidth="Infinity" visible="false" disable="true"/>
 
-                            <Button text="Create Account" onAction="#onRegister" styleClass="action-btn" maxWidth="Infinity"/>
+                            <Button text="Create Account" onAction="#onRegister" styleClass="action-btn" maxWidth="Infinity" defaultButton="true"/>
                         </VBox>
                     </ScrollPane>
                 </Tab>

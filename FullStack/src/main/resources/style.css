@@ -464,3 +464,8 @@
     -fx-background-color: #2980b9; /* A slightly darker blue */
     -fx-text-fill: white;
 }
+/* Make rows look clickable */
+.table-row-cell:filled:hover,
+.list-cell:filled:hover {
+    -fx-cursor: hand;
+}

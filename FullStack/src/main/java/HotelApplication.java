@@ -29,13 +29,8 @@ public class HotelApplication extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(HotelApplication.class.getResource("/" + fxml + ".fxml"));
-            return fxmlLoader.load();
-        } catch (Exception e) {
-            e.printStackTrace(); // ← this will show the REAL exception
-            throw e;
-        }
+        FXMLLoader fxmlLoader = new FXMLLoader(HotelApplication.class.getResource("/" + fxml + ".fxml"));
+        return fxmlLoader.load();
     }
 
 
@@ -142,7 +137,6 @@ public class HotelApplication extends Application {
 
         } catch (Exception ignored) {}
     }
-
 
     public static void main(String[] args) {
         launch();

@@ -74,8 +74,15 @@ public class Admin extends User {
     {
         for (HotelAdmin hotelAdmin : Database.getInstance().hotelAdmins)
         {
-            wallet.Pay(50);
-            if (hotelAdmin.ID.equals(ID))hotelAdmin.wallet.getMoney(50);
+            if (hotelAdmin.ID.equals(ID)) {
+                // Deduct from Admin
+                wallet.Pay(50);
+
+                // Give to Hotel Admin
+                hotelAdmin.wallet.getMoney(50);
+
+                return; // Stop looking after we find them
+            }
         }
     }
     public void createHotel(String name, Ratings rating, String address) {

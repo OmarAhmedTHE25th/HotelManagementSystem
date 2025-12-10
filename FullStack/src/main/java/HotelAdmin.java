@@ -13,6 +13,7 @@ public class HotelAdmin extends User{
         this.username = username;
         this.ID = ID;
         this.hotel = hotel;
+        this.wallet = new Wallet();
         Database.getInstance().hotelAdmins.add(this);
     }
     public boolean logIn(String username, String password,String ID)

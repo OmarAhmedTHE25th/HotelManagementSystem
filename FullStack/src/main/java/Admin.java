@@ -83,6 +83,7 @@ public class Admin extends User {
 
                 return; // Stop looking after we find them
             }
+            throw new IllegalArgumentException("Is it a Ghost? is it a zombie?\n No its just your idiocy. \nNo one here has this ID");
         }
     }
     public void createHotel(String name, Ratings rating, String address) {

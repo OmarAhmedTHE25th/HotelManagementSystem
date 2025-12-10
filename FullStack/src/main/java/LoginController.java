@@ -1,7 +1,5 @@
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
-
 import java.time.LocalDate;
 
 public class LoginController {
@@ -11,7 +9,7 @@ public class LoginController {
     @FXML private ComboBox<String> roleCombo, regRole;
     @FXML private DatePicker regDob;
     @FXML private TabPane tabPane;
-    @FXML private VBox hotelNameBox;
+
 
 
 

@@ -5,10 +5,6 @@ public class HotelAdmin extends User{
     private Hotel hotel;
     private String password;
     Wallet wallet;
-    private static final HotelAdmin instance = new HotelAdmin();
-     static HotelAdmin getInstance() {
-        return instance;
-    }
     HotelAdmin(){}
     HotelAdmin(String username, String password, LocalDate birthday, String ID,Hotel hotel)
     {

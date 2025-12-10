@@ -53,4 +53,11 @@ Hotel(){}
     public String getLocation() {
     return address;
     }
+
+    public Ratings getRating() {return rating;
+    }
+
+    public String getAddress() {
+    return address;
+    }
 }

@@ -2,7 +2,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.jetbrains.annotations.NotNull;
@@ -66,6 +65,29 @@ public class GuestController {
                 super.updateItem(item, empty);
                 // If the item exists, set the text to ONLY the hotel name
                 setText(empty ? null : item.getHotelName()); //
+            }
+        });
+        hotelList.setCellFactory(_ -> new ListCell<Hotel>() {
+            @Override
+            protected void updateItem(Hotel hotel, boolean empty) {
+                super.updateItem(hotel, empty);
+
+                if (empty || hotel == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+
+                    String stars = String.valueOf(switch (hotel.getRating()) {
+                        case Ratings.FIVE_STAR -> "★★★★★";
+                        case Ratings.FOUR_STAR -> "★★★★";
+                        case Ratings.THREE_STAR -> "★★★";
+                        case Ratings.TWO_STAR -> "★★";
+                        case ONE_STAR -> "★";
+                    });
+
+                    setText(hotel.getHotelName() + "\n" + stars + " • " + hotel.getAddress());
+                    setStyle("-fx-padding: 8; -fx-font-size: 14; -fx-font-weight: 500;");
+                }
             }
         });
 
@@ -466,8 +488,8 @@ public class GuestController {
                         insults = new ArrayList<>();
                         random = new Random();
                         // Example:
-                        insults.add("Your complaint is too long; we ran out of patience. Denied.");
-                        insults.add("Too brief. Put more effort into your misery. Try again.");
+                        insults.add("Your complaint is too long; \nwe ran out of patience. Denied.");
+                        insults.add("Too brief. Put more effort into your misery. \nTry again.");
                         insults.add("We only accept complaints formatted in haiku. Rejected.");
 
                     }

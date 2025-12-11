@@ -13,6 +13,7 @@ public class Guest extends User{
     private final ArrayList<Room> roomsReserved= new ArrayList<>();
     boolean flagged = false;
     int countFlagged=0;
+    private final ArrayList<Room> bookingHistory = new ArrayList<>();
 
     public ArrayList<Room> getRoomsReserved() {
         return roomsReserved;
@@ -169,6 +170,10 @@ public String viewReservations()
         }
 
         return availableHotels;
+    }
+    public String viewBookingHistory()
+    {
+        return "";
     }
     @Override
     public String toString() {

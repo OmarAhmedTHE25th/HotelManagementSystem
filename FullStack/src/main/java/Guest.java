@@ -142,26 +142,7 @@ public void chooseHotel(String name)
             }
         }
     }
-    public String viewHistory() {
-        StringBuilder info = new StringBuilder("--- Booking History ---\n");
-        if (history.isEmpty()) {
-            info.append("No bookings in your history.");
-            return info.toString();
-        }
-        for (Room room : history) {
-            // Calculate total price. Note: The price stored is the per-day price.
-            long days = ChronoUnit.DAYS.between(LocalDate.now(), room.checkout);
-            // For a checked-out room, days might be negative. We will display the recorded price (room.price) multiplied by days.
-            double totalPrice = room.price * (days > 0 ? days : 1);
 
-            info.append("Hotel: ").append(room.hotel.getHotelName())
-                    .append(", Room #: ").append(room.roomNumber)
-                    .append(", Price: $").append(String.format("%.2f", totalPrice))
-                    .append(", Checkout: ").append(room.checkout)
-                    .append(", Status: ").append(room.status.toString()).append("\n");
-        }
-        return info.toString();
-    }
 public boolean checkout(int roomNumber,Hotel hotel)
 {
     for(Room room: roomsReserved)

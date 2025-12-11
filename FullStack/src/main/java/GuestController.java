@@ -3,6 +3,7 @@ import javafx.collections.FXCollections;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +12,12 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
+import javafx.stage.Stage;
+import javafx.stage.Modality;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.VBox; // Import for the root of the new FXML
 
 public class GuestController {
 
@@ -515,8 +521,33 @@ public class GuestController {
     private void onViewHistory() {
         Guest g = (Guest) Session.currentUser;
 
-        // Use the HotelApplication's alert method to display the formatted history string
-        HotelApplication.showAlert("Booking History", g.viewHistory());
+        try {
+            // 1. Load the FXML file for the history table view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/history.fxml"));
+            VBox root = loader.load();
+
+            // 2. Get the new controller and pass the data (history list)
+            HistoryController historyController = loader.getController();
+            // Pass the list of Room snapshots
+            historyController.setHistoryData(g.getHistory());
+
+            // 3. Create a new stage (pop-up window)
+            Stage historyStage = new Stage();
+            historyStage.setTitle("Booking History");
+            // Modality.APPLICATION_MODAL means you must close this window before using the main app
+            historyStage.initModality(Modality.APPLICATION_MODAL);
+
+            // Load the scene and apply the style sheet for a consistent look
+            Scene scene = new Scene(root, 700, 500);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
+
+            historyStage.setScene(scene);
+            historyStage.showAndWait();
+
+        } catch (Exception e) {
+            HotelApplication.showError("Could not load history window: " + e.getMessage());
+            e.printStackTrace(); // This helps you debug in the console
+        }
     }
 }
 

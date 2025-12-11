@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="HistoryController"
+      spacing="10"
+      style="-fx-padding: 15;">
+
+    <Label text="Complete Booking History" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <TableView fx:id="historyTable" VBox.vgrow="ALWAYS" prefHeight="400">
+        <columns>
+            <TableColumn fx:id="colHotel" text="Hotel" prefWidth="150"/>
+            <TableColumn fx:id="colRoom" text="Room #"/>
+            <TableColumn fx:id="colPrice" text="Price Paid ($)"/>
+            <TableColumn fx:id="colCheckout" text="Checkout Date" prefWidth="120"/>
+            <TableColumn fx:id="colStatus" text="Status" prefWidth="100"/>
+        </columns>
+    </TableView>
+
+    <Button text="Close" onAction="#onClose" maxWidth="Infinity" style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+
+</VBox>

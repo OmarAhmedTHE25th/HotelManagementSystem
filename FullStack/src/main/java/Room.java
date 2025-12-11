@@ -8,6 +8,7 @@ public class Room {
     public Types roomType;
     public LocalDate checkout = null;
     public Hotel hotel;
+    public BookingStatus status;
 
     Room(){}
     Room(int roomNumber,double price,Types roomType,Hotel hotel)

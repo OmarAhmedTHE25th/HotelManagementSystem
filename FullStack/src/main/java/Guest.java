@@ -13,10 +13,13 @@ public class Guest extends User{
     private final ArrayList<Room> roomsReserved= new ArrayList<>();
     boolean flagged = false;
     int countFlagged=0;
-    private final ArrayList<Room> bookingHistory = new ArrayList<>();
+    private final ArrayList<Room> history = new ArrayList<>();
 
     public ArrayList<Room> getRoomsReserved() {
         return roomsReserved;
+    }
+    public ArrayList<Room> getHistory() {
+        return history;
     }
 
     private Guest(String username, String password, LocalDate birthday, String ID)
@@ -84,6 +87,10 @@ public void chooseHotel(String name)
 
             // 3. IF PAYMENT SUCCEEDS, FINALIZE THE RESERVATION
             roomsReserved.add(currRoom);
+            Room historyRecord = new Room(currRoom.roomNumber, currRoom.price, currRoom.roomType, currRoom.hotel);
+            historyRecord.setCheckout(checkout);
+            historyRecord.status = BookingStatus.RESERVED;   // Set status using the enum
+            history.add(historyRecord);
 
         } catch (Exception e) {
 
@@ -118,14 +125,43 @@ public void chooseHotel(String name)
                 if (LocalDate.now().isBefore(room.checkout))
                     wallet.getMoney(room.price*(ChronoUnit.DAYS.between(LocalDate.now(),room.checkout)));
                 else throw new IllegalArgumentException("Refund Not Allowed");
-
+                updateHistoryStatus(roomNumber, hotel.getHotelName(), BookingStatus.CANCELLED);
                 return;
             }
         }
 
         throw new IllegalArgumentException("Room number invalid in Selected Hotel");
     }
+    private void updateHistoryStatus(int rNum, String hName, BookingStatus newStatus) {
+        // Loop backwards to find the most recent booking that is currently "RESERVED"
+        for (int i = history.size() - 1; i >= 0; i--) {
+            Room r = history.get(i);
+            if (r.roomNumber == rNum && r.hotel.getHotelName().equals(hName) && r.status == BookingStatus.RESERVED) {
+                r.status = newStatus;
+                return;
+            }
+        }
+    }
+    public String viewHistory() {
+        StringBuilder info = new StringBuilder("--- Booking History ---\n");
+        if (history.isEmpty()) {
+            info.append("No bookings in your history.");
+            return info.toString();
+        }
+        for (Room room : history) {
+            // Calculate total price. Note: The price stored is the per-day price.
+            long days = ChronoUnit.DAYS.between(LocalDate.now(), room.checkout);
+            // For a checked-out room, days might be negative. We will display the recorded price (room.price) multiplied by days.
+            double totalPrice = room.price * (days > 0 ? days : 1);
 
+            info.append("Hotel: ").append(room.hotel.getHotelName())
+                    .append(", Room #: ").append(room.roomNumber)
+                    .append(", Price: $").append(String.format("%.2f", totalPrice))
+                    .append(", Checkout: ").append(room.checkout)
+                    .append(", Status: ").append(room.status.toString()).append("\n");
+        }
+        return info.toString();
+    }
 public boolean checkout(int roomNumber,Hotel hotel)
 {
     for(Room room: roomsReserved)
@@ -133,6 +169,7 @@ public boolean checkout(int roomNumber,Hotel hotel)
         if (room.roomNumber == roomNumber&& room.hotel.getHotelName().equals(hotel.getHotelName())) {
             room.available = true;
             roomsReserved.remove(room);
+            updateHistoryStatus(roomNumber, hotel.getHotelName(), BookingStatus.CHECKED_OUT);
             return true;
         }
     }

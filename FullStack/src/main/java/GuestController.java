@@ -511,7 +511,13 @@ public class GuestController {
             HotelApplication.showAlert("Complaint", "Thank for your time. Your complaint will be processed soon :-}");
         });
     }
+    @FXML
+    private void onViewHistory() {
+        Guest g = (Guest) Session.currentUser;
 
+        // Use the HotelApplication's alert method to display the formatted history string
+        HotelApplication.showAlert("Booking History", g.viewHistory());
+    }
 }
 
 

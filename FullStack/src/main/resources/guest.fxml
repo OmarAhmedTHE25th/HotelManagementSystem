@@ -26,6 +26,7 @@
                                style="-fx-pref-width: 120; -fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-prompt-text-fill: rgba(255,255,255,0.6);"/>
                     <Button text="💰 Deposit" onAction="#onDeposit" styleClass="success-btn"/>
                     <Button text="📝 Complain" onAction="#onComplain"/>
+                    <Button text="View History" onAction="#onViewHistory" minWidth="-Infinity"/>
                     <Button text="🚪 Logout" onAction="#onLogout" styleClass="danger-btn"/>
                 </HBox>
             </HBox>

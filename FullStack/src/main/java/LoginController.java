@@ -117,7 +117,7 @@ public class LoginController {
                 }
             }
         } catch (Exception e) {
-             // Print the real error to console
+             e.printStackTrace();// Print the real error to console
             HotelApplication.showError("Error: " + e.getMessage());
         }
     }

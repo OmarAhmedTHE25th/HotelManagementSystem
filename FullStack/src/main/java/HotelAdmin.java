@@ -5,6 +5,8 @@ public class HotelAdmin extends User{
     private Hotel hotel;
     private String password;
     Wallet wallet;
+    boolean paid = false;
+    public LocalDate lastPaymentDate;
     HotelAdmin(){}
     HotelAdmin(String username, String password, LocalDate birthday, String ID,Hotel hotel)
     {
@@ -15,6 +17,8 @@ public class HotelAdmin extends User{
         this.hotel = hotel;
         this.wallet = new Wallet();
         Database.getInstance().hotelAdmins.add(this);
+
+
     }
     public boolean logIn(String username, String password,String ID)
     {
@@ -60,5 +64,24 @@ public class HotelAdmin extends User{
             if (room.roomNumber == roomNumber){room.price = newPrice; return;}
         throw new IllegalArgumentException("Room Number Invalid");
     }
+    public void checkPaymentStatus() {
+        // Only check if they are currently marked as paid
+        if (paid && lastPaymentDate != null) {
+            LocalDate today = LocalDate.now();
 
+            // Calculate days passed
+            long daysPassed = java.time.temporal.ChronoUnit.DAYS.between(lastPaymentDate, today);
+
+            // If 30 or more days have passed, reset it
+            if (daysPassed >= 30) {
+                paid = false;
+            }
+        }
+    }
+
+    public void receiveSalary() {
+        this.wallet.getMoney(50);
+        this.paid = true;
+        this.lastPaymentDate = LocalDate.now(); // Saves "today" as the payment date
+    }
 }

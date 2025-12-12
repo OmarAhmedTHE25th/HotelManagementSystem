@@ -474,8 +474,6 @@ public class GuestController {
         if (selectedRoom != null && date != null && date.isAfter(today)) {
             long days = ChronoUnit.DAYS.between(today, date);
             double total = selectedRoom.price * days;
-
-            // Assuming you added a Label called totalPriceLabel
             totalPriceLabel.setText("Total: $" + total);
         } else {
             totalPriceLabel.setText("Total: $0.00");

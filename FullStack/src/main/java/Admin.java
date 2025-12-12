@@ -2,6 +2,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class Admin extends User {
@@ -45,14 +46,15 @@ public class Admin extends User {
        return true;
     }
     public double getRevenue() {
+        double total = 0;
         for(Guest guest: Database.getInstance().guests)
         {
             for (Room room: guest.getRoomsReserved() )
-            {
-                wallet.getMoney(room.price);
+            { double totalPrice = room.price * ChronoUnit.DAYS.between(LocalDate.now(), room.checkout);
+                total += totalPrice;
             }
         }
-        return wallet.getBalance();
+        return total;
     }
     public void flagOverdueCustomers() {
         for(Guest guest: Database.getInstance().guests)
@@ -75,11 +77,11 @@ public class Admin extends User {
         for (HotelAdmin hotelAdmin : Database.getInstance().hotelAdmins)
         {
             if (hotelAdmin.ID.equals(ID)) {
+                if (hotelAdmin.paid)throw new IllegalArgumentException("This isn't a charity. We dont give people free Money");
                 // Deduct from Admin
                 wallet.Pay(50);
-
                 // Give to Hotel Admin
-                hotelAdmin.wallet.getMoney(50);
+                hotelAdmin.receiveSalary();
 
                 return; // Stop looking after we find them
             }
@@ -95,15 +97,6 @@ public class Admin extends User {
             }
         }
         new Hotel(name, rating, address);
-    }
-    public String viewHotels()
-    {
-        StringBuilder sb = new StringBuilder();
-        for (Hotel hotel: Database.getInstance().hotels)
-        {
-            sb.append(hotel.toString()).append("\n");
-        }
-        return sb.toString();
     }
 
 

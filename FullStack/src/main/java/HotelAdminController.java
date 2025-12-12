@@ -36,7 +36,7 @@ public class HotelAdminController {
     public void initialize() {
         admin = (HotelAdmin) Session.currentUser;
         Hotel hotel = admin.getHotel();
-
+        admin.checkPaymentStatus();
         // Set hotel info
         hotelNameLabel.setText(hotel.getHotelName());
         hotelLocationLabel.setText(hotel.getLocation());

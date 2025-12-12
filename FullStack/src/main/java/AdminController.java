@@ -1,11 +1,19 @@
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
 
 public class AdminController {
 
+    @FXML private ListView<Hotel> hotelListView;
+    @FXML private Label hotelCountLabel;
+    @FXML private Label walletLabel;
+    @FXML private Label revenueLabel;
     @FXML private TextField hotelNameField, hotelAddressField;
     @FXML private ComboBox<Ratings> ratingCombo;
     @FXML private TextArea outputArea;
@@ -16,8 +24,10 @@ public class AdminController {
     public void initialize() {
         admin = (Admin) Session.currentUser;
         ratingCombo.getItems().addAll(Ratings.values());
-        updateHotelList();
+        setupHotelList(); // Helper method for the list
+        onViewRevenue();  // Load money stats on startup
     }
+
 
     @FXML
     private void onCreateHotel() {
@@ -25,7 +35,7 @@ public class AdminController {
             if (Objects.equals(hotelNameField.getText(), "") || ratingCombo.getValue()==null|| Objects.equals(hotelAddressField.getText(), ""))throw new IllegalArgumentException("Just because you are super doesnt mean you are super natural!");
             admin.createHotel(hotelNameField.getText(), ratingCombo.getValue(), hotelAddressField.getText());
             HotelApplication.showAlert("Success", "Hotel Created");
-            updateHotelList();
+            setupHotelList();
         } catch (Exception e) {
             HotelApplication.showError(e.getMessage());
         }
@@ -33,7 +43,67 @@ public class AdminController {
 
     @FXML
     private void onViewRevenue() {
-        outputArea.setText("Total Revenue: $" + admin.getRevenue());
+        // 1. Get Wallet Balance
+        double myBalance = admin.wallet.getBalance();
+        walletLabel.setText(String.format("$%.2f", myBalance));
+
+        // 2. Get Total System Revenue
+        double revenue = admin.getRevenue();
+        revenueLabel.setText(String.format("$%.2f", revenue));
+    }
+
+    // NEW: Setup the Fancy Hotel List
+    private void setupHotelList() {
+        // 1. Set the data
+        hotelListView.setItems(FXCollections.observableArrayList(Database.getInstance().hotels));
+        hotelCountLabel.setText(Database.getInstance().hotels.size() + " hotels");
+
+        // 2. Custom Cell Factory (The "Card" Look)
+        hotelListView.setCellFactory(param -> new ListCell<Hotel>() {
+            @Override
+            protected void updateItem(Hotel hotel, boolean empty) {
+                super.updateItem(hotel, empty);
+
+                if (empty || hotel == null) {
+                    setText(null);
+                    setGraphic(null);
+                    setStyle("-fx-background-color: transparent;");
+                } else {
+                    // Create a VBox to hold the hotel info
+                    VBox container = new VBox(5);
+                    container.setStyle("-fx-padding: 10; -fx-background-color: #f8fafc; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;");
+
+                    // Top Row: Name and Stars
+                    HBox topRow = new HBox(10);
+                    Label nameLbl = new Label(hotel.getHotelName());
+                    nameLbl.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+
+                    String starStr = switch (hotel.getRating()) {
+                        case FIVE_STAR -> "★★★★★";
+                        case FOUR_STAR -> "★★★★";
+                        case THREE_STAR -> "★★★";
+                        case TWO_STAR -> "★★";
+                        case ONE_STAR -> "★";
+                    };
+                    Label starLbl = new Label(starStr);
+                    starLbl.setStyle("-fx-text-fill: #f59e0b;"); // Gold color
+
+                    topRow.getChildren().addAll(nameLbl, starLbl);
+
+                    // Bottom Row: Location and Room Count
+                    HBox bottomRow = new HBox(10);
+                    Label locLbl = new Label("📍 " + hotel.getLocation());
+                    Label roomLbl = new Label("🛏 " + hotel.getRooms().size() + " rooms");
+                    locLbl.setStyle("-fx-text-fill: #64748b; -fx-font-size: 12px;");
+                    roomLbl.setStyle("-fx-text-fill: #64748b; -fx-font-size: 12px;");
+
+                    bottomRow.getChildren().addAll(locLbl, roomLbl);
+
+                    container.getChildren().addAll(topRow, bottomRow);
+                    setGraphic(container);
+                }
+            }
+        });
     }
 
     @FXML
@@ -48,9 +118,7 @@ public class AdminController {
         HotelApplication.setRoot("login");
     }
 
-    private void updateHotelList() {
-        outputArea.setText(admin.viewHotels());
-    }
+
     @FXML
     private void onGiveSalary() {
         String id = hotelAdminIDField.getText();
@@ -62,8 +130,7 @@ public class AdminController {
         try {
             admin.giveSalary(id);
             HotelApplication.showAlert("Cash Tossed",
-                    "A massive $50 has been reluctantly given to Hotel Admin ID: " + id + ".\n" +
-                            "Your own wallet balance increased by $50 for the effort. You earned it.");
+                    "A massive $50 has been reluctantly given to Hotel Admin ID: " + id );
             hotelAdminIDField.clear();
         } catch (Exception e) {
             HotelApplication.showError("Payment Failed: " + e.getMessage());

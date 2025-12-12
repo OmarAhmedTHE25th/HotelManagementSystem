@@ -485,8 +485,10 @@
 }
 
 /* Individual Tabs */
+/* Individual Tabs */
 .tab {
-    -fx-background-color: rgba(255, 255, 255, 0.15);
+    /* Changed from transparent white to light gray so it is visible on the white card */
+    -fx-background-color: #f1f5f9;
     -fx-background-radius: 12 12 0 0;
     -fx-padding: 14 32;
     -fx-font-weight: 600;
@@ -496,21 +498,20 @@
 }
 
 .tab:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.25);
+    -fx-background-color: #e2e8f0; /* Slightly darker gray on hover */
     -fx-cursor: hand;
 }
 
 .tab:selected {
-    -fx-background-color: rgba(255, 255, 255, 0.95);
+    -fx-background-color: white;
     -fx-border-color: #667eea;
     -fx-border-width: 0 0 3 0;
 }
 
 .tab .tab-label {
-    -fx-text-fill: rgba(255, 255, 255, 0.9);
+    -fx-text-fill: #94a3b8; /* Fixed the typo here */
     -fx-font-weight: 600;
 }
-
 .tab:selected .tab-label {
     -fx-text-fill: #667eea;
 }
@@ -572,7 +573,7 @@
 
 /* Enhanced Action Buttons (for forms) */
 .action-btn {
-    -fx-background-color: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -fx-background-color: linear-gradient(to bottom right, #667eea, #764ba2);
     -fx-text-fill: white;
     -fx-font-weight: 700;
     -fx-font-size: 15px;
@@ -584,7 +585,7 @@
 }
 
 .action-btn:hover {
-    -fx-background-color: linear-gradient(135deg, #5568d3 0%, #6639a0 100%);
+    -fx-background-color: linear-gradient(to bottom right, #667eea, #764ba2);
     -fx-effect: dropshadow(gaussian, rgba(102, 126, 234, 0.8), 20, 0, 0, 7);
     -fx-scale-y: 1.05;
     -fx-scale-x: 1.05;
@@ -668,11 +669,6 @@
 }
 
 /* Button Ripple Effect on Click (simulated with scale) */
-@keyframes button-ripple {
-    0% { -fx-scale-x: 1; -fx-scale-y: 1; }
-    50% { -fx-scale-x: 0.95; -fx-scale-y: 0.95; }
-    100% { -fx-scale-x: 1; -fx-scale-y: 1; }
-}
 
 /* Disabled Button State */
 .button:disabled {
@@ -741,6 +737,7 @@
 }
 
 /* DatePicker Enhancement */
+/* DatePicker Enhancement */
 .date-picker {
     -fx-background-color: white;
     -fx-background-radius: 10;
@@ -750,6 +747,15 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 5, 0, 0, 2);
 }
 
+.date-picker .arrow-button {
+    -fx-background-color: transparent;
+    /* REMOVED: -fx-padding: 8; */
+}
+
+.date-picker .arrow {
+    -fx-background-color: #667eea;
+    /* REMOVED: -fx-padding: 3; */
+}
 .date-picker:focused {
     -fx-border-color: #667eea;
     -fx-border-width: 2;
@@ -760,10 +766,22 @@
     -fx-border-color: #cbd5e1;
 }
 
-.date-picker .arrow-button {
-    -fx-background-color: transparent;
+
+.date-picker-popup .spinner .button {
+    -fx-padding: 2 4 2 4; /* Overrides the global big button padding */
+    -fx-background-radius: 3;
+    -fx-border-width: 0;
 }
 
-.date-picker .arrow {
-    -fx-background-color: #667eea;
+/* Make the arrow shapes inside those buttons smaller */
+.date-picker-popup .spinner .button .left-arrow,
+.date-picker-popup .spinner .button .right-arrow {
+    -fx-padding: 4; /* Reduces the size of the arrow icon */
+    -fx-background-color: #667eea; /* Matches your theme color */
+}
+
+/* Optional: Fix the month/year text centering if it looks off */
+.date-picker-popup .spinner .spinner-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #1e293b;
 }

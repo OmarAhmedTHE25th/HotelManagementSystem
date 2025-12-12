@@ -2,6 +2,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.collections.*;
 
@@ -9,6 +10,7 @@ import java.io.IOException;
 
 public class HotelAdminController {
 
+    @FXML private PieChart occupancyChart;
     @FXML private Label hotelNameLabel;
     @FXML private Label hotelLocationLabel;
     @FXML private Label roomCountLabel;
@@ -58,25 +60,43 @@ public class HotelAdminController {
         roomsTable.setItems(FXCollections.observableArrayList(admin.getHotel().getRooms()));
         updateStats();
     }
-
     private void updateStats() {
-        Hotel hotel = admin.getHotel();
-        int total = hotel.getRooms().size();
-        long available = hotel.getRooms().stream().filter(r -> r.available).count();
-        long occupied = total - available;
+            Hotel hotel = admin.getHotel();
+            if (hotel == null) return; // Safety check
 
-        if (roomCountLabel != null) {
-            roomCountLabel.setText(total + " rooms");
-        }
-        if (totalRoomsLabel != null) {
-            totalRoomsLabel.setText(String.valueOf(total));
-        }
-        if (availableRoomsLabel != null) {
-            availableRoomsLabel.setText(String.valueOf(available));
-        }
-        if (occupiedRoomsLabel != null) {
-            occupiedRoomsLabel.setText(String.valueOf(occupied));
-        }
+            // Create data for the chart
+            int total = hotel.getRooms().size();
+
+            // Calculate available rooms safely
+            long available = hotel.getRooms().stream()
+                    .filter(r -> r.available)
+                    .count();
+
+            long occupied = total - available;
+
+            // Update the header label (The one in your screenshot)
+            if (roomCountLabel != null) {
+                roomCountLabel.setText(total + " rooms");
+            }
+
+            // Update the big stats cards
+            if (totalRoomsLabel != null) {
+                totalRoomsLabel.setText(String.valueOf(total));
+            }
+            if (availableRoomsLabel != null) {
+                availableRoomsLabel.setText(String.valueOf(available));
+            }
+            if (occupiedRoomsLabel != null) {
+                occupiedRoomsLabel.setText(String.valueOf(occupied));
+            }
+
+            ObservableList<PieChart.Data> pieData = FXCollections.observableArrayList(
+                    new PieChart.Data("Available", available),
+                    new PieChart.Data("Occupied", occupied)
+            );
+
+            occupancyChart.setData(pieData);
+
     }
 
     @FXML
@@ -135,4 +155,5 @@ public class HotelAdminController {
         Session.currentUser = null;
         HotelApplication.setRoot("login");
     }
+
 }

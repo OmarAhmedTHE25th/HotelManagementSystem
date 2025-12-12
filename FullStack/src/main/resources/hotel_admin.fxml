@@ -3,6 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
+<?import javafx.scene.chart.PieChart?>
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="HotelAdminController" styleClass="root-pane">
 
@@ -125,25 +126,7 @@
                 </HBox>
 
                 <!-- Quick Stats -->
-                <HBox spacing="16">
-                    <VBox spacing="8" styleClass="stats-card" HBox.hgrow="ALWAYS">
-                        <Label text="Total Rooms" style="-fx-font-size: 12px; -fx-opacity: 0.9;"/>
-                        <Label fx:id="totalRoomsLabel" text="0"
-                               style="-fx-font-size: 28px; -fx-font-weight: 700;"/>
-                    </VBox>
-
-                    <VBox spacing="8" styleClass="stats-card" HBox.hgrow="ALWAYS">
-                        <Label text="Available Rooms" style="-fx-font-size: 12px; -fx-opacity: 0.9;"/>
-                        <Label fx:id="availableRoomsLabel" text="0"
-                               style="-fx-font-size: 28px; -fx-font-weight: 700;"/>
-                    </VBox>
-
-                    <VBox spacing="8" styleClass="stats-card" HBox.hgrow="ALWAYS">
-                        <Label text="Occupied Rooms" style="-fx-font-size: 12px; -fx-opacity: 0.9;"/>
-                        <Label fx:id="occupiedRoomsLabel" text="0"
-                               style="-fx-font-size: 28px; -fx-font-weight: 700;"/>
-                    </VBox>
-                </HBox>
+                <PieChart fx:id="occupancyChart" />
             </VBox>
         </ScrollPane>
     </center>

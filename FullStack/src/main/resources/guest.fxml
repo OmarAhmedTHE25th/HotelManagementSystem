@@ -91,6 +91,7 @@
                     <Label text="Checkout Date:"/>
                     <DatePicker fx:id="checkoutDate" promptText="Select Date"/>
                     <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="totalPriceLabel" text="Total: $0.00" style="-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #1e293b;"/>
                     <Button text="Reserve Selected" onAction="#onReserve" styleClass="action-btn" style="-fx-font-size: 14px;" />
                 </HBox>
             </VBox>

@@ -16,7 +16,6 @@ public class AdminController {
     @FXML private Label revenueLabel;
     @FXML private TextField hotelNameField, hotelAddressField;
     @FXML private ComboBox<Ratings> ratingCombo;
-    @FXML private TextArea outputArea;
     @FXML private TextField hotelAdminIDField;
     private Admin admin;
 

@@ -190,10 +190,6 @@ public String viewReservations()
 
         return availableHotels;
     }
-    public String viewBookingHistory()
-    {
-        return "";
-    }
     @Override
     public String toString() {
         return

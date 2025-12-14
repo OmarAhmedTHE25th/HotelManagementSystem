@@ -58,28 +58,42 @@ public class Admin extends User implements Serializable {
         }
         return total;
     }
-    public void flagOverdueCustomers() {
-        Iterator<Guest> guestIterator =
-                Database.getInstance().guests.iterator();
+    public int flagOverdueCustomers() { // <-- Changed return type from void to int
+        int evictedCount = 0;
 
-        while (guestIterator.hasNext()) {
-            Guest guest = guestIterator.next();
+        // Use an Iterator for safe removal of guests while iterating (This fixes a potential crash)
+        java.util.Iterator<Guest> iterator = Database.getInstance().guests.iterator();
 
-            for (Room room : guest.getRoomsReserved()) {
-                if (LocalDate.now().isAfter(room.checkout)) {
-                    guest.flagged = true;
-                    guest.countFlagged++;
+        while (iterator.hasNext()) {
+            Guest guest = iterator.next();
+            boolean isOverdueInAnyRoom = false;
 
-                    if (guest.countFlagged > 3) {
-                        for (Room room1 : guest.getRoomsReserved()) {
-                            room1.available = true;
-                        }
-                        guestIterator.remove(); // ✅ SAFE REMOVAL
+            // Check if ANY room is overdue for this guest
+            for(Room room: guest.getRoomsReserved()) {
+                if (java.time.LocalDate.now().isAfter(room.checkout)) {
+                    isOverdueInAnyRoom = true;
+                    break; // One overdue room is enough to flag the guest for today
+                }
+            }
+
+            if (isOverdueInAnyRoom) {
+                // Apply the 'strike' (flag and increment count) ONCE per guest per run
+                guest.flagged = true;
+                guest.countFlagged++;
+
+                // Check the eviction limit
+                if (guest.countFlagged > 3) {
+                    // Eviction logic
+                    for (Room room1: guest.getRoomsReserved()) {
+                        room1.available = true; // Clear rooms
                     }
-                    break; // 🔥 important (see below)
+                    iterator.remove(); // Safely remove the guest from the database list
+                    evictedCount++; // Count the eviction
                 }
             }
         }
+
+        return evictedCount; // Return the total count of evicted guests
     }
 
     public void Resign() {

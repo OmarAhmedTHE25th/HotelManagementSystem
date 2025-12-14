@@ -59,7 +59,7 @@ public class AdminController {
         hotelCountLabel.setText(Database.getInstance().hotels.size() + " hotels");
 
         // 2. Custom Cell Factory (The "Card" Look)
-        hotelListView.setCellFactory(param -> new ListCell<Hotel>() {
+        hotelListView.setCellFactory(_ -> new ListCell<>() {
             @Override
             protected void updateItem(Hotel hotel, boolean empty) {
                 super.updateItem(hotel, empty);
@@ -108,8 +108,19 @@ public class AdminController {
 
     @FXML
     private void onFlagOverdue() {
-        admin.flagOverdueCustomers();
-        outputArea.setText("Overdue customers flagged.");
+        // Call the modified method and get the count of evicted guests
+        int evictedCount = admin.flagOverdueCustomers();
+
+        String message;
+        if (evictedCount > 0) {
+            // Show a CRITICAL alert if guests were removed
+            message = String.format("%d customers were found to be overstaying by 4+ days and have been EVICTED from the system. Their rooms are now available.", evictedCount);
+            HotelApplication.showAlert("Critical Action: Eviction Complete", message);
+        } else {
+            // Show a simple alert if no one was removed
+            message = "Overdue guests have been flagged for the day. No customers were evicted this run.";
+            HotelApplication.showAlert("Action Complete", message);
+        }
     }
 
     @FXML

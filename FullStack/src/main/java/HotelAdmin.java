@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
 
-public class HotelAdmin extends User{
+public class HotelAdmin extends User implements Serializable {
     private Hotel hotel;
     private String password;
     Wallet wallet;

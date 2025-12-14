@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class Room {
+public class Room implements Serializable {
     public int roomNumber;
     public boolean available = true;
     public double price;

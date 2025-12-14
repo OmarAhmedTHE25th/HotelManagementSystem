@@ -1,11 +1,13 @@
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
+import java.util.Iterator;
 import java.util.Objects;
 
-public class Admin extends User {
+public class Admin extends User implements Serializable {
     private final String password;
     Wallet wallet;
 
@@ -57,18 +59,29 @@ public class Admin extends User {
         return total;
     }
     public void flagOverdueCustomers() {
-        for(Guest guest: Database.getInstance().guests)
-         for(Room room: guest.getRoomsReserved())
-            if (LocalDate.now().isAfter(room.checkout)) {
-                guest.flagged = true;
-                guest.countFlagged++;
-                if (guest.countFlagged > 3) {
-                    for (Room room1: guest.getRoomsReserved())
-                        room1.available = true;
-                    Database.getInstance().guests.remove(guest);
+        Iterator<Guest> guestIterator =
+                Database.getInstance().guests.iterator();
+
+        while (guestIterator.hasNext()) {
+            Guest guest = guestIterator.next();
+
+            for (Room room : guest.getRoomsReserved()) {
+                if (LocalDate.now().isAfter(room.checkout)) {
+                    guest.flagged = true;
+                    guest.countFlagged++;
+
+                    if (guest.countFlagged > 3) {
+                        for (Room room1 : guest.getRoomsReserved()) {
+                            room1.available = true;
+                        }
+                        guestIterator.remove(); // ✅ SAFE REMOVAL
+                    }
+                    break; // 🔥 important (see below)
                 }
             }
+        }
     }
+
     public void Resign() {
     Database.getInstance().setAdmin(null);
 }

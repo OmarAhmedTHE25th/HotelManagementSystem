@@ -1,9 +1,10 @@
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Hotel {
+public class Hotel implements Serializable {
     private String hotelName;
     Ratings rating;
     private String address;

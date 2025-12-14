@@ -15,13 +15,22 @@ public class HotelApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        seedData();
+        Database.loadData();
+        if (Database.getInstance().getAdmin() == null) {
+            seedData();
+        }
         scene = new Scene(loadFXML("login"), 800, 600);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
         stage.setTitle("Hotel Management System");
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/img.png")).toExternalForm()));
         stage.setScene(scene);
         stage.show();
+    }
+    @Override
+    public void stop() throws Exception {
+        // ADD THIS: This method is called automatically when the user closes the window
+        Database.saveData();
+        super.stop();
     }
 
     static void setRoot(String fxml) throws IOException {

@@ -1,4 +1,6 @@
-public class Wallet {
+import java.io.Serializable;
+
+public class Wallet implements Serializable {
 
     private double balance = 100;
 

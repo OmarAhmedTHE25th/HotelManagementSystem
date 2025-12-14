@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -6,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Guest extends User{
+public class Guest extends User implements Serializable {
     private String password;
     private Hotel currhotel;
     final Wallet wallet=new Wallet();

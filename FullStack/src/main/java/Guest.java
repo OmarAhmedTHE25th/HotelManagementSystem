@@ -72,7 +72,6 @@ public void chooseHotel(String name)
     {
         for(Room room: roomsReserved)
             if (LocalDate.now().isAfter(room.checkout)) {
-                room.price*=2;
                 throw new IllegalArgumentException("PAY UP!!");
             }
 
@@ -115,17 +114,19 @@ public void chooseHotel(String name)
             throw new IllegalArgumentException("No Reservations to cancel");
 
         Iterator<Room> it = roomsReserved.iterator();
-
         while (it.hasNext()) {
             Room room = it.next();
 
-            if (room.roomNumber == roomNumber&& room.hotel.getHotelName().equals(hotel.getHotelName())) {
-                room.available = true;
-                it.remove(); // safe
+            if (room.roomNumber == roomNumber && room.hotel.getHotelName().equals(hotel.getHotelName())) {
+                // CHECK FIRST before modifying anything
+                if (LocalDate.now().isAfter(room.checkout)) {
+                    throw new IllegalArgumentException("Refund Not Allowed");
+                }
 
-                if (LocalDate.now().isBefore(room.checkout))
-                    wallet.getMoney(room.price*(ChronoUnit.DAYS.between(LocalDate.now(),room.checkout)));
-                else throw new IllegalArgumentException("Refund Not Allowed");
+                // NOW it's safe to modify
+                room.available = true;
+                it.remove();
+                wallet.getMoney(room.price * ChronoUnit.DAYS.between(LocalDate.now(), room.checkout));
                 updateHistoryStatus(roomNumber, hotel.getHotelName(), BookingStatus.CANCELLED);
                 return;
             }

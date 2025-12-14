@@ -51,7 +51,9 @@ public class HotelAdmin extends User implements Serializable {
         this.hotel = hotel;
     }
     public void createRoom(int roomNumber, double price, Types roomType)
-    {   if (hotel.getRooms().size()>100) throw new IllegalArgumentException("Hotel Full");
+    {   if (roomNumber <= 0) throw new IllegalArgumentException("Room number must be positive");
+        if (price <= 0) throw new IllegalArgumentException("Unless you like debts. Make the price cant be Negative");
+        if (hotel.getRooms().size()>100) throw new IllegalArgumentException("Hotel Full. We are done accepting monkeys.");
         for (Room room: hotel.getRooms())
             if (room.roomNumber == roomNumber)
                 throw new IllegalArgumentException("Room Number Taken\n");
@@ -61,6 +63,7 @@ public class HotelAdmin extends User implements Serializable {
     }
     public void changeRoomPrice(int roomNumber,int newPrice)
     {
+        if (newPrice <= 0) throw new IllegalArgumentException("Unless you like debts. Make the price cant be Negative");
         for (Room room: hotel.getRooms())
             if (room.roomNumber == roomNumber){room.price = newPrice; return;}
         throw new IllegalArgumentException("Room Number Invalid");

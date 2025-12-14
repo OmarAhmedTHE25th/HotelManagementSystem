@@ -209,5 +209,26 @@ public class AdminController {
         Optional<ButtonType> result = confirm.showAndWait(); // only call once
         return result.isPresent() && result.get() == ButtonType.CANCEL; // true if OK, false if Cancel
     }
+    // In AdminController - make the dashboard more visual
+    @FXML private Label totalGuestsLabel;
+    @FXML private Label totalBookingsLabel;
+    @FXML private Label averageOccupancyLabel;
 
+    private void updateDashboard() {
+        totalGuestsLabel.setText(String.valueOf(Database.getInstance().guests.size()));
+
+        int totalBookings = Database.getInstance().guests.stream()
+                .mapToInt(g -> g.getRoomsReserved().size()).sum();
+        totalBookingsLabel.setText(String.valueOf(totalBookings));
+
+        // Calculate occupancy
+        long totalRooms = Database.getInstance().hotels.stream()
+                .mapToInt(h -> h.getRooms().size()).sum();
+        long occupiedRooms = Database.getInstance().hotels.stream()
+                .flatMap(h -> h.getRooms().stream())
+                .filter(r -> !r.available).count();
+
+        double occupancy = (totalRooms > 0) ? (occupiedRooms * 100.0 / totalRooms) : 0;
+        averageOccupancyLabel.setText(String.format("%.1f%%", occupancy));
+    }
 }

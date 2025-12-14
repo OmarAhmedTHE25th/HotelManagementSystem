@@ -248,6 +248,7 @@ public class GuestController {
             Insults insult = new Insults();
             if (guest.wallet.getBalance() < selected.price)throw new IllegalArgumentException("No Poor People Allowed!");
             if(guest.getRoomsReserved().size() >= 5) {HotelApplication.showAlert("Too many rooms", insult.getRandomInsult());return;}
+            double totalprice = selected.price;
             if (Math.random() < 0.1){HotelApplication.showAlert("Inflation", "Your ugly face made the room Gods angry, +50$ fees");selected.price+=50;}
             if (Math.random() < 0.01){HotelApplication.showAlert("Pity", "We feel pity for your sorry ass. 10$ discount");selected.price-=10;}
             if (Math.random() < 0.04){HotelApplication.showAlert("Judgment", "The system crashed in your imagination. -0$ but we’re judging you.");}

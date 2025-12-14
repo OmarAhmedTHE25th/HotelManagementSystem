@@ -51,8 +51,10 @@ public class Admin extends User implements Serializable {
         for(Guest guest: Database.getInstance().guests)
         {
             for (Room room: guest.getRoomsReserved() )
-            { double totalPrice = room.price * ChronoUnit.DAYS.between(LocalDate.now(), room.checkout);
-                total += totalPrice;
+            {long days = ChronoUnit.DAYS.between(LocalDate.now(), room.checkout);
+                if (days > 0) { // Only count future revenue
+                    total += room.price * days;
+                }
             }
         }
         return total;

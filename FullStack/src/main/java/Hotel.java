@@ -9,6 +9,7 @@ public class Hotel implements Serializable {
     Ratings rating;
     private String address;
     private final ArrayList<Room> rooms = new ArrayList<>();
+    HotelAdmin Hadmin;
 Hotel(){}
     Hotel(String hotelName, Ratings rating, String address) {
         this.hotelName = hotelName;

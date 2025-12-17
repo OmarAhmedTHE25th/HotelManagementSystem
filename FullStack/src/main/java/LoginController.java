@@ -1,5 +1,7 @@
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.jetbrains.annotations.NotNull;
+
 import java.time.LocalDate;
 
 public class LoginController {
@@ -138,17 +140,8 @@ public class LoginController {
             } else if ("Admin".equals(role)) {
                 Admin.signUp(user, pass, dob, id);
             } else if ("Hotel Admin".equals(role)) {
-                String hName = regHotelName.getText();
-                Hotel targetHotel = null;
-                for (Hotel h : Database.getInstance().hotels) {
-                    if (h.getHotelName().equals(hName)) {
-                        targetHotel = h;
-                        break;
-                    }
-                }
-                if (targetHotel == null) throw new IllegalArgumentException("Hotel not found");
-
-                HotelAdmin.signUp(user, pass, dob, id, targetHotel);
+                Hotel targetHotel = getHotel();
+                targetHotel.Hadmin = HotelAdmin.signUp(user, pass, dob, id, targetHotel);
             }
 
             HotelApplication.showAlert("Success", "Account Created! Please Login.");
@@ -156,5 +149,19 @@ public class LoginController {
         } catch (Exception e) {
             HotelApplication.showError(e.getMessage());
         }
+    }
+
+    private @NotNull Hotel getHotel() {
+        String hName = regHotelName.getText();
+        Hotel targetHotel = null;
+        for (Hotel h : Database.getInstance().hotels) {
+            if (h.getHotelName().equals(hName)) {
+                targetHotel = h;
+                if (targetHotel.Hadmin != null)throw new IllegalArgumentException("There is an Imposter among us.");
+                break;
+            }
+        }
+        if (targetHotel == null) throw new IllegalArgumentException("Hotel not found");
+        return targetHotel;
     }
 }

@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.Nullable;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -29,7 +31,7 @@ public class HotelAdmin extends User implements Serializable {
 
         return false;
     }
-    public static void signUp(String username, String password, LocalDate birthday, String ID, Hotel hotel)
+    public static @Nullable HotelAdmin signUp(String username, String password, LocalDate birthday, String ID, Hotel hotel)
     {
         for (HotelAdmin hotelAdmin: Database.getInstance().hotelAdmins)
             if (hotelAdmin.username .equals(username))
@@ -39,9 +41,10 @@ public class HotelAdmin extends User implements Serializable {
 
         if( Admin.validateCredentials(password, birthday))
         {
-            new HotelAdmin(username, password, birthday, ID,hotel);
+            return new HotelAdmin(username, password, birthday, ID,hotel);
 
         }
+        return null;
     }
 
     public Hotel getHotel() {

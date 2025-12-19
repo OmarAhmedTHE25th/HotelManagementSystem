@@ -42,6 +42,7 @@ public class GuestController {
     @FXML private ComboBox<Ratings> ratingFilterCombo;
     private Guest guest;
     @FXML private TableColumn<Room, String> resHotelCol;
+    @FXML private TextField depositField;
     @FXML
     public void initialize() {
         guest = (Guest) Session.currentUser;
@@ -341,8 +342,7 @@ public class GuestController {
         Guest g = (Guest) Session.currentUser;
         balanceLabel.setText("Wallet: " + g.wallet.getBalance() + " $");
     }
-    @FXML
-    private TextField depositField;
+
 
     @FXML
     private void onDeposit() {

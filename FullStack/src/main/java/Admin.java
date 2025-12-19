@@ -88,8 +88,10 @@ public class Admin extends User implements Serializable {
                     for (Room room1: guest.getRoomsReserved()) {
                         room1.available = true; // Clear rooms
                     }
+                    Guest.signUp("","",null,guest.ID);
                     iterator.remove(); // Safely remove the guest from the database list
                     evictedCount++; // Count the eviction
+
                 }
             }
         }

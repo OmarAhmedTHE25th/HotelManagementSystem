@@ -72,7 +72,7 @@ public void chooseHotel(String name)
     {
         for(Room room: roomsReserved)
             if (LocalDate.now().isAfter(room.checkout)) {
-                throw new IllegalArgumentException("PAY UP!!");
+                throw new IllegalArgumentException("Get Outta here!");
             }
 
         // 1. RESERVE THE ROOM (This sets room.available = false internally)

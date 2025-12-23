@@ -23,7 +23,7 @@ public class Guest extends User implements Serializable {
         return history;
     }
 
-    private Guest(String username, String password, LocalDate birthday, String ID)
+    Guest(String username, String password, LocalDate birthday, String ID)
 {
     this.birthday = birthday;
     this.password = password;
@@ -101,7 +101,6 @@ public void chooseHotel(String name)
             throw e;
         }
     }
-
 
 
 

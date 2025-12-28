@@ -1,3 +1,12 @@
+package Frontend;
+
+import Backned.Admin;
+import Backned.Database;
+import Backned.Hotel;
+import Backned.HotelAdmin;
+import Backned.Ratings;
+import Backned.Room;
+import Backned.Types;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +18,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Objects;
 import javafx.scene.image.Image;
+import Backned.Guest;
 public class HotelApplication extends Application {
 
     private static Scene scene;

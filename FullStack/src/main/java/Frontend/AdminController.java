@@ -1,3 +1,8 @@
+package Frontend;
+
+import Backned.Admin;
+import Backned.Hotel;
+import Backned.Ratings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -7,6 +12,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
+import Backned.Database;
 
 public class AdminController {
 

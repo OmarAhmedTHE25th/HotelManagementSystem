@@ -1,3 +1,9 @@
+package Frontend;
+
+import Backned.Guest;
+import Backned.Hotel;
+import Backned.Ratings;
+import Backned.Room;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.beans.property.SimpleStringProperty;
@@ -20,6 +26,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox; // Import for the root of the new FXML
 
 import javax.swing.*;
+import Backned.Database;
 
 public class GuestController {
 

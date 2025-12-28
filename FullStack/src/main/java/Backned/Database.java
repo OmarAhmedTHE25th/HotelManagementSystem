@@ -1,3 +1,5 @@
+package Backned;
+
 import java.io.*;
 import java.util.ArrayList;
 public class Database implements Serializable {
@@ -7,9 +9,9 @@ public class Database implements Serializable {
         return instance;
     }
    private final Admin[] admin= new Admin[1];
-    ArrayList<Hotel> hotels = new ArrayList<>();
-    ArrayList<Guest> guests = new ArrayList<>();
-    ArrayList<HotelAdmin> hotelAdmins = new ArrayList<>();
+    public ArrayList<Hotel> hotels = new ArrayList<>();
+    public ArrayList<Guest> guests = new ArrayList<>();
+    public ArrayList<HotelAdmin> hotelAdmins = new ArrayList<>();
     public Admin getAdmin()
     {
         return admin[0];

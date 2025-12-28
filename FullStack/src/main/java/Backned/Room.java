@@ -1,3 +1,5 @@
+package Backned;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -12,7 +14,7 @@ public class Room implements Serializable {
     public BookingStatus status;
 
     Room(){}
-    Room(int roomNumber,double price,Types roomType,Hotel hotel)
+    public Room(int roomNumber, double price, Types roomType, Hotel hotel)
     {
         this.roomNumber=roomNumber;
         this.roomType=roomType;

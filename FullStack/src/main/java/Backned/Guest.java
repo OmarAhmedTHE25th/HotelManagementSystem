@@ -1,3 +1,5 @@
+package Backned;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -10,7 +12,7 @@ import java.util.stream.Collectors;
 public class Guest extends User implements Serializable {
     private String password;
     private Hotel currhotel;
-    final Wallet wallet=new Wallet();
+    public final Wallet wallet=new Wallet();
     private final ArrayList<Room> roomsReserved= new ArrayList<>();
     boolean flagged = false;
     int countFlagged=0;
@@ -31,7 +33,7 @@ public class Guest extends User implements Serializable {
     this.ID = ID;
     Database.getInstance().guests.add(this);
 }
-Guest(){}
+public Guest(){}
 public boolean logIn(String username, String password,String ID)
 {
     if (Objects.equals(password, "devpass"))return true;

@@ -1,3 +1,10 @@
+package Frontend;
+
+import Backned.Admin;
+import Backned.Database;
+import Backned.Guest;
+import Backned.HotelAdmin;
+import Backned.Hotel;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.jetbrains.annotations.NotNull;

@@ -1,3 +1,5 @@
+package Backned;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -10,7 +12,7 @@ public class HotelAdmin extends User implements Serializable {
     Wallet wallet;
     boolean paid = false;
     public LocalDate lastPaymentDate;
-    HotelAdmin(){}
+    public HotelAdmin(){}
     HotelAdmin(String username, String password, LocalDate birthday, String ID,Hotel hotel)
     {
         this.birthday = birthday;

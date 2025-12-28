@@ -1,3 +1,5 @@
+package Backned;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -8,7 +10,7 @@ import java.util.Objects;
 
 public class Admin extends User implements Serializable {
     private final String password;
-    Wallet wallet;
+    public Wallet wallet;
 
     Admin(String username, String password, LocalDate birthday, String ID) {
         this.birthday = birthday;
@@ -103,7 +105,7 @@ public class Admin extends User implements Serializable {
     public void Resign() {
     Database.getInstance().setAdmin(null);
 }
-    void giveSalary(String  ID)
+    public void giveSalary(String ID)
     {
         for (HotelAdmin hotelAdmin : Database.getInstance().hotelAdmins)
         {

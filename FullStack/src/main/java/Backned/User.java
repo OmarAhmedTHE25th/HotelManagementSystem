@@ -1,8 +1,10 @@
+package Backned;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 abstract public class User implements Serializable {
-    String username;
+    public String username;
     LocalDate birthday;
-    String ID;
+    public String ID;
 User(){}
 }

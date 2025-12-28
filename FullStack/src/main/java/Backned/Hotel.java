@@ -1,3 +1,5 @@
+package Backned;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
@@ -9,9 +11,9 @@ public class Hotel implements Serializable {
     Ratings rating;
     private String address;
     private final ArrayList<Room> rooms = new ArrayList<>();
-    HotelAdmin Hadmin;
+    public HotelAdmin Hadmin;
 Hotel(){}
-    Hotel(String hotelName, Ratings rating, String address) {
+    public Hotel(String hotelName, Ratings rating, String address) {
         this.hotelName = hotelName;
         this.rating = rating;
         this.address = address;

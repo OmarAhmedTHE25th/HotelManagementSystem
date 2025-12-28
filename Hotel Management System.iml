@@ -21,5 +21,14 @@
     </orderEntry>
     <orderEntry type="library" exported="" name="openjfx-25.0.1_windows-x64_bin-sdk" level="application" />
     <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.m2/repository/org/jetbrains/annotations/26.0.2/annotations-26.0.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

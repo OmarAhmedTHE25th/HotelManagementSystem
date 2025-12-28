@@ -1,3 +1,5 @@
+package Backned;
+
 public enum Types {
     DELUXE,
     SINGLE,
